@@ -8,7 +8,6 @@ class CommentsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // user: 'Anonymous', // hardcoded for testing purposes
       comment: '',
       comments: props.article.comments,
     };
