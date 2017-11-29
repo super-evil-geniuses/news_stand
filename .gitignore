@@ -35,7 +35,6 @@ node_modules/
 # private environment variables
 .env
 keys.js
-package-lock.json
 
 # Desktop services store
 .DS_Store
