@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/news_stand');
+mongoose.connect(process.env.MONGODB_URI);
 
 const db = mongoose.connection;
 
