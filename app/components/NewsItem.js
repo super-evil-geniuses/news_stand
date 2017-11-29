@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import defaultImage from '../public/assets/defaultImage';
 
 import FavoriteButton from './FavoriteButton';
+import CommentsList from './CommentsList';
 
 const NewsItem = ({ article }) => (
   <div className="newsItem">
@@ -40,6 +41,7 @@ const NewsItem = ({ article }) => (
         </div> :
         null
     }
+    <CommentsList />
 
     <br />
   </div>

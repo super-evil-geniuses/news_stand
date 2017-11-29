@@ -20,7 +20,6 @@ let suggestions;
 
 function renderInput(inputProps) {
   const { classes, autoFocus, value, ref, ...other } = inputProps;
-
   return (
     <TextField
       autoFocus={autoFocus}

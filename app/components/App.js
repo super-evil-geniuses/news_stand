@@ -18,7 +18,7 @@ class App extends React.Component {
       user: {},
     };
   }
-
+  
   componentDidMount() {
     axios.get('/auth')
       .then((authStatus) => {
