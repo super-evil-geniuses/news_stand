@@ -11,7 +11,7 @@ const articleSchema = new Schema({
   },
   author: String,
   url: String,
-  body: String,
+  body: [],
   comments: [], // {username: String, comment: String}
   favorites: { type: Number, default: 0 },
 });
