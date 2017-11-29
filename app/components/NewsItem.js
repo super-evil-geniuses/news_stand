@@ -41,7 +41,7 @@ const NewsItem = ({ article }) => (
         </div> :
         null
     }
-    <CommentsList />
+    <CommentsList article={article} />
 
     <br />
   </div>

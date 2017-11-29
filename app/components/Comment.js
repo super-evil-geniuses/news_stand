@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 
 const Comment = props => (
   <div className="Comment">
-    User: {props.comment}
+    {props.username}: {props.comment}
   </div>
 );
 
 Comment.propTypes = {
+  username: PropTypes.string.isRequired,
   comment: PropTypes.string.isRequired,
 };
 

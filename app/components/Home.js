@@ -8,6 +8,7 @@ import SelectedSources from './SelectedSources';
 import NewsList from './NewsList';
 import Header from './Header';
 import getSources from './helpers/getSources';
+import dummyData from '../dummy-data/articles_v2';
 
 class Home extends React.Component {
   constructor(props) {
@@ -160,7 +161,7 @@ class Home extends React.Component {
           </div>
 
           <div className="articlesContainer">
-            <NewsList newsArticles={this.state.articles} />
+            <NewsList newsArticles={dummyData.articles} />
           </div>
         </div>
       </div>
