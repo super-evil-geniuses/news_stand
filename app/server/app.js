@@ -50,7 +50,7 @@ app.get('/sources', getSources, (request, response) => {
   response.json(request.sources);
 });
 
-app.get('/preferences', getPreferences, searchArticles, (request, response) => {
+app.get('/preferences', getPreferences, searchArticles, scraper, (request, response) => {
   const { articles, preferences } = request;
   response.json({ articles, preferences });
 });
@@ -61,7 +61,11 @@ app.post('/preferences', setPreferences, (request, response) => {
 
 app.post('/favorites', addFavorite, (request, response) => {
   if (request.user) {
-    response.status(201).end('favorite added');
+    const resObj = {
+      message: 'favorite added',
+      article: request.article,
+    };
+    response.status(201).end(JSON.stringify(resObj));
   } else {
     response.status(200).end('please log in before adding to favorites');
   }
