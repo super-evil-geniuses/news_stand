@@ -13,6 +13,8 @@ import getSources from './middleware/getSources';
 import getPreferences from './middleware/getPreferences';
 import setPreferences from './middleware/setPreferences';
 import addFavorite from './middleware/addFavorite';
+import scraper from './middleware/scraper.js';
+import addComment from './middleware/addComment';
 
 
 const app = express();
@@ -39,7 +41,7 @@ app.use('/auth', authRoutes);
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
 
-app.get('/articles', searchArticles, (request, response) => {
+app.get('/articles', searchArticles, scraper, (request, response) => {
   const { articles } = request;
   response.json(articles);
 });
@@ -48,7 +50,7 @@ app.get('/sources', getSources, (request, response) => {
   response.json(request.sources);
 });
 
-app.get('/preferences', getPreferences, searchArticles, (request, response) => {
+app.get('/preferences', getPreferences, searchArticles, scraper, (request, response) => {
   const { articles, preferences } = request;
   response.json({ articles, preferences });
 });
@@ -59,9 +61,25 @@ app.post('/preferences', setPreferences, (request, response) => {
 
 app.post('/favorites', addFavorite, (request, response) => {
   if (request.user) {
-    response.status(201).end('favorite added');
+    const resObj = {
+      message: 'favorite added',
+      article: request.article,
+    };
+    response.status(201).end(JSON.stringify(resObj));
   } else {
     response.status(200).end('please log in before adding to favorites');
+  }
+});
+
+app.post('/comments', addComment, (request, response) => {
+  if (request.user) {
+    const resObj = {
+      message: 'comment added',
+      article: request.article,
+    };
+    response.status(201).end(JSON.stringify(resObj));
+  } else {
+    response.status(200).end('please log in before commenting');
   }
 });
 

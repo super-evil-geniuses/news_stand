@@ -5,11 +5,27 @@ import defaultImage from '../public/assets/defaultImage';
 import FavoriteButton from './FavoriteButton';
 // react routes
 
-const FullArticle = ({ article }) => (
-  <div className="full-article">
-  RENDER FULL ARTICLE HERE
-  </div>
-);
+  // {article.params.id}
+const FullArticle = ({ match }) => {
+  console.log(match);
+  return (
+    <div className="full-article">
+    RENDER FULL ARTICLE HERE
+    {match.params.id}<br/>
+    </div>
+  );
+}
+
+// const FullArticle = (props) => {
+//   console.log(props);
+//   return (
+//     <div className="full-article">
+//     RENDER FULL ARTICLE HERE
+//     {props.match.params.id}<br/>
+//     {props.location.state}
+//     </div>
+//   );
+// }
 
 // const Player = (props) => {
 //   const player = PlayerAPI.get(
