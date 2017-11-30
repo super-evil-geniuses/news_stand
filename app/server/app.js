@@ -13,11 +13,8 @@ import getSources from './middleware/getSources';
 import getPreferences from './middleware/getPreferences';
 import setPreferences from './middleware/setPreferences';
 import addFavorite from './middleware/addFavorite';
-<<<<<<< HEAD
 import scraper from './middleware/scraper.js';
-=======
 import addComment from './middleware/addComment';
->>>>>>> stores comments into db and displays updated comment list
 
 
 const app = express();

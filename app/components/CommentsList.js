@@ -9,7 +9,7 @@ class CommentsList extends React.Component {
     super(props);
     this.state = {
       comment: '',
-      comments: props.article.comments,
+      comments: props.article.comments || [],
     };
 
     this.handleChange = this.handleChange.bind(this);
