@@ -14,20 +14,33 @@ const addFavorite = (request, response, next) => {
       url: request.body.url,
     });
 
-    const findCriteria = { googleId: request.user.googleId };
-    const toUpdate = { $addToSet: { articles: favorited } };
+    const articleFindCriteria = { url: request.body.url };
+    const articleToUpdate = { $inc: { favorites: 1 } };
 
-    User.findOneAndUpdate(findCriteria, toUpdate)
-      .exec()
+    const userFindCriteria = { googleId: request.user.googleId };
+    const userToUpdate = { $addToSet: { articles: favorited } };
+
+    Article.findOneAndUpdate(articleFindCriteria, articleToUpdate, { new: true })
       .then((doc) => {
-        console.log(doc);
+        request.article = doc;
+      })
+      .then(() => {
+        User.findOneAndUpdate(userFindCriteria, userToUpdate)
+          .exec()
+          .then((doc) => {
+            console.log(doc);
+          })
+          .catch((err) => {
+            console.log('error adding favorite to the database: ', err);
+          });
+      })
+      .then(() => {
+        next();
       })
       .catch((err) => {
-        console.log('error adding favorite to the database: ', err);
+        console.log(err);
       });
   }
-
-  next();
 };
 
 export default addFavorite;
