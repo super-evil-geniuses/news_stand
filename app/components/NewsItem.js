@@ -9,7 +9,7 @@ import CommentsList from './CommentsList';
 const NewsItem = props => (
   <div className="newsItem">
     <Link to={{ 
-      pathname: '/articles/' + article.title,
+      pathname: '/articles/' + article._id,
     }}>
       {
         article.urlToImage ?
@@ -18,11 +18,9 @@ const NewsItem = props => (
           <img src={defaultImage} className="defaultImg" alt="#" />        
       }
     {
-      props.article.title ?
-        <a href={props.article.url} target="_blank">
-          <h3 className="articleTitle"> {props.article.title} </h3>
-        </a>
-        :
+      article.title ?
+        <h3 className="articleTitle"> {article.title} </h3>
+    :
         null
     }
     </Link>
