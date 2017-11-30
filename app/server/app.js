@@ -77,6 +77,11 @@ app.post('/favorites', addFavorite, (request, response) => {
   }
 });
 
+app.get('/favorites', getFavorites, (request, response) => {
+  const { favorites } = request;
+  response.json({ favorites });
+});
+
 app.post('/comments', addComment, (request, response) => {
   if (request.user) {
     const resObj = {

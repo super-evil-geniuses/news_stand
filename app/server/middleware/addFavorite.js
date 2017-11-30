@@ -3,17 +3,6 @@ import Article from '../database/models/article';
 
 const addFavorite = (request, response, next) => {
   if (request.user) {
-    const favorited = new Article({
-      urlToImage: request.body.urlToImage,
-      title: request.body.title,
-      description: request.body.description,
-      source: {
-        name: request.body.source.name,
-      },
-      author: request.body.author,
-      url: request.body.url,
-    });
-
     const articleFindCriteria = { url: request.body.url };
     const userFindCriteria = { googleId: request.user.googleId };
 
@@ -22,10 +11,10 @@ const addFavorite = (request, response, next) => {
 
     if (!request.body.favorited) {
       articleToUpdate = { $inc: { favorites: 1 } };
-      userToUpdate = { $addToSet: { articles: favorited } };
+      userToUpdate = { $addToSet: { articles: request.body.url } };
     } else {
       articleToUpdate = { $inc: { favorites: -1 } };
-      userToUpdate = { $pull: { articles: { url: request.body.url } } };
+      userToUpdate = { $pull: { articles: request.body.url } };
     }
 
     Article.findOneAndUpdate(articleFindCriteria, articleToUpdate, { new: true })
@@ -35,8 +24,8 @@ const addFavorite = (request, response, next) => {
       .then(() => {
         User.findOneAndUpdate(userFindCriteria, userToUpdate)
           .exec()
-          .then((doc) => {
-            console.log(doc);
+          .then(() => {
+            console.log('successfully added favorite article');
           })
           .catch((err) => {
             console.log('error adding favorite to the database: ', err);
