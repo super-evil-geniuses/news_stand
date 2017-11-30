@@ -35,8 +35,10 @@ class TopicsSearch extends React.Component {
   onSearch(event) {
     event.preventDefault();
     const value = this.state.searchTerm;
-    this.setState({ searchTerm: '' });
-    this.onTopicSearch(value);
+    if (!!value) {
+      this.setState({ searchTerm: '' });
+      this.onTopicSearch(value);
+    }
   }
 
   handleBarChange(event) {
