@@ -1,37 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import defaultImage from '../public/assets/defaultImage';
-import { BrowserRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom';
 
 import FavoriteButton from './FavoriteButton';
 import CommentsList from './CommentsList';
-import FullArticle from './FullArticle';
 
 const NewsItem = ({ article }) => (
   <div className="newsItem">
     <Link to={{ 
-      pathname: '/articles/' + article.title,
-      state: 'article',
+      pathname: '/articles/' + article._id,
     }}>
       {
         article.urlToImage ?
-            <img src={article.urlToImage} className="articleImg" alt="#" />
-
-          :
-
-            <img src={defaultImage} className="defaultImg" alt="#" />        
+          <img src={article.urlToImage} className="articleImg" alt="#" />
+        :
+          <img src={defaultImage} className="defaultImg" alt="#" />        
       }
-    </Link>
-    <FavoriteButton article={article} />
     {
       article.title ?
-        <a href={article.url} target="_blank">
-          <h3 className="articleTitle"> {article.title} </h3>
-        </a>
+        <h3 className="articleTitle"> {article.title} </h3>
         :
         null
     }
-
+    </Link>
+    <FavoriteButton article={article} />
     {
       article.description ?
         <p className="articleDescription">{article.description}</p> :
