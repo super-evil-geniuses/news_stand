@@ -8,6 +8,7 @@ import Login from './Login';
 import NotFound from './NotFound';
 import Profile from './Profile';
 import getPreferences from './helpers/getPreferences';
+import FullArticle from './FullArticle';
 
 class App extends React.Component {
   constructor(props) {
@@ -56,6 +57,7 @@ class App extends React.Component {
               )
           )}
           />
+          <Route path="/articles/:id" component={FullArticle} />
           <Route
             component={NotFound}
           />
@@ -65,4 +67,5 @@ class App extends React.Component {
   }
 }
 
+// <Route path="/articles/:id" component={FullArticle} />
 export default App;

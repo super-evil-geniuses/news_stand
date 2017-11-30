@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import defaultImage from '../public/assets/defaultImage';
 
 import FavoriteButton from './FavoriteButton';
@@ -7,26 +8,23 @@ import CommentsList from './CommentsList';
 
 const NewsItem = props => (
   <div className="newsItem">
-    {
-      props.article.urlToImage ?
-        <a href={props.article.url} target="_blank">
+    <Link to={{ 
+      pathname: '/articles/' + props.article._id,
+    }}>
+      {
+        props.article.urlToImage ?
           <img src={props.article.urlToImage} className="articleImg" alt="#" />
-        </a>
         :
-        <a href={props.article.url} target="_blank">
-          <img src={defaultImage} className="defaultImg" alt="#" />
-        </a>
-    }
-    <FavoriteButton article={props.article} favorited={props.favorited} />
+          <img src={defaultImage} className="defaultImg" alt="#" />        
+      }
     {
       props.article.title ?
-        <a href={props.article.url} target="_blank">
-          <h3 className="articleTitle"> {props.article.title} </h3>
-        </a>
-        :
+        <h3 className="articleTitle"> {props.article.title} </h3>
+    :
         null
     }
-
+    </Link>
+    <FavoriteButton article={props.article} favorited={props.favorited} />
     {
       props.article.description ?
         <p className="articleDescription">{props.article.description}</p> :
@@ -41,6 +39,7 @@ const NewsItem = props => (
         </div> :
         null
     }
+
     <CommentsList article={props.article} />
 
     <br />
