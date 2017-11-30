@@ -15,6 +15,33 @@ class Home extends React.Component {
     this.state = {
       sortBy: 'publishedAt',
       articles: [],
+      sources: { 
+        techCrunch: {
+          label: 'TechCrunch',
+          id: 'techcrunch',
+          selected: false,
+        },
+        cnn: {
+          label: 'CNN',
+          id: 'cnn',
+          selected: true,
+        },
+        bloomberg: {
+          label: 'Bloomberg',
+          id: 'bloomberg',
+          selected: false,
+        },
+        abc: {
+          label: 'abc-news',
+          id: 'ABC News',
+          selected: false,
+        },
+        associatedPress: {
+          label: 'associated-press',
+          id: 'Associated Press',
+          selected: false,
+        },
+    },
       selectedSources: [{
         label: 'TechCrunch',
         id: 'techcrunch',
@@ -33,8 +60,16 @@ class Home extends React.Component {
 
   componentDidMount() {
     const { topics, selectedSources, sortBy } = this.state;
+    let { sources } = this.state;
+    let arr = [];
+    for (const source in sources) {
+      if (sources[source].selected) {
+        arr.push(sources[source])
+      }
+    }
+    sources = arr;
     const options = {
-      topics, selectedSources, sortBy,
+      topics, sources, sortBy,
     };
     this.props.getPreferences(options, (articlesAndPreferences) => {
       if (articlesAndPreferences.data.preferences) {
@@ -111,7 +146,9 @@ class Home extends React.Component {
   }
 
   setPreferences() {
-    const { topics, selectedSources } = this.state;
+    const { topics } = this.state;
+    let { sources } = this.state;
+    sources = sources.filter((e) => e.selected );
 
     axios.post('/preferences', { topics, selectedSources })
       .then((message) => {

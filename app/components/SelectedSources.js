@@ -13,7 +13,21 @@ const SelectedSources = (props) => {
   ));
   return (
     <div className="selectedSourcesContainer">
-      {sources}
+      <input type="checkbox" id="CNN" name="subscribe" value="CNN" />
+      <label for="subscribeNews">CNN</label>
+      <br />
+      <input type="checkbox" id="BLOOMBERG" name="subscribe" value="CNN" />
+      <label for="subscribeNews">BLOOMBERG</label>
+      <br />
+      <input type="checkbox" id="ABC" name="subscribe" value="CNN" />
+      <label for="subscribeNews">ABC</label>
+      <br />
+      <input type="checkbox" id="TECH CRUNCH" name="subscribe" value="CNN" />
+      <label for="subscribeNews">TECH CRUNCH</label>
+      <br />
+      <input type="checkbox" id="ASSOCIATED PRESS" name="subscribe" value="CNN" />
+      <label for="subscribeNews">ASSOCIATED PRESS</label>
+
     </div>
   );
 };

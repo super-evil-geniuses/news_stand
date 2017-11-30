@@ -4,7 +4,7 @@ import Article from '../database/models/article.js'
 
 const searchArticles = (request, response, next) => {
 
-  const { sortBy, topics, selectedSources } = request.query;
+  const { sortBy, topics, sources } = request.query;
 
   const beginDate = moment().subtract(3, 'weeks').format('YYYY-MM-DD');
   const endDate = moment().format('YYYY-MM-DD');
@@ -14,16 +14,19 @@ const searchArticles = (request, response, next) => {
     const formattedTopic = topics.join('%20OR%20').split(' ').join('%20');
     url += `&q=${formattedTopic}`;
   }
-  if (selectedSources) {
-    const formattedSource = selectedSources.map((source) => {
-      let parsedSource = source;
+  if (sources) {
+    console.log('LOOOOOOOK', Array.isArray(sources), sources[0])
+    let parsedSources = sources.map((e) => JSON.parse(e));
+    console.log(parsedSources);
+    const formattedSource = parsedSources.map((source) => {
+      let parsedSource = source.id;
       if (typeof parsedSource === 'string') {
         parsedSource = JSON.parse(parsedSource);
       }
       return parsedSource.id;
     }).join(',');
     url += `&sources=${formattedSource}`;
-  } else if (!selectedSources && !topics) {
+  } else if (!sources && !topics) {
     url += '&sources=techcrunch';
   }
 
@@ -31,15 +34,6 @@ const searchArticles = (request, response, next) => {
   axios
     .get(url)
     .then((newsResponse) => {
-      ///////////////////////////////
-      // here is where we need to  //
-      // check db                  //
-      // if it's not in the db {   //
-      // send the web crawler      //
-      //     store into the db     //
-      // and store locally  }      //
-      // and store locally  }      //
-      ///////////////////////////////
       request.articles = newsResponse.data.articles;
     })
     .catch((err) => {
