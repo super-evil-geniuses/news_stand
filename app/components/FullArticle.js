@@ -5,8 +5,6 @@ import defaultImage from '../public/assets/defaultImage';
 import FavoriteButton from './FavoriteButton';
 // react routes
   // {article.params.id}
-
-  // {article.params.id}
 // const FullArticle = ({ match }) => {
 //   console.log(match);
 //   return (
