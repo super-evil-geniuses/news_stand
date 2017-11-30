@@ -47,8 +47,8 @@ app.get('/articles', searchArticles, scraper, (request, response) => {
 });
 
 app.get('/article/:id', findArticle, (request, response) => {
-  
-  response.json({article: {data: 'hello world'}});
+  const { article } = request;
+  response.json(article);
 });
 
 app.get('/sources', getSources, (request, response) => {

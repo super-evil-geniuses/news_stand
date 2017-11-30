@@ -3,11 +3,6 @@ import PropTypes from 'prop-types';
 import uniq from 'node-uniq';
 
 import NewsItem from './NewsItem';
-// import FullArticle from './FullArticle';
-// import { BrowserRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom';
-
-// Link is your replacement for anchor tags.
-// Route is the conditionally shown component based on matching a path to a URL.
 
 const NewsList = props => (
   <div className="news-list">

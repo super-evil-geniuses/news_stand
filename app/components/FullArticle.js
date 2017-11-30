@@ -3,33 +3,22 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import defaultImage from '../public/assets/defaultImage';
 import FavoriteButton from './FavoriteButton';
-// react routes
-  // {article.params.id}
-// const FullArticle = ({ match }) => {
-//   console.log(match);
-//   return (
-//     <div className="full-article">
-//     RENDER FULL ARTICLE HERE
-//     {match.params.id}<br/>
-//     </div>
-//   );
-// }
+import CommentsList from './CommentsList';
 
 class FullArticle extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      article: {},
+      article: 'newspaper',
     };
   }
 
   componentDidMount() {
-    // pass in match.params.id
-    axios.get(`/article/:${this.props.match.params.id}`) //create endpoint to query db for article
-      .then((article) => {
+    axios.get('/article/'+this.props.match.params.id)
+      .then((response) => {
         this.setState({
-          article: article.data,
+          article: response.data,
         });
       })
       .catch((err) => {
@@ -37,17 +26,50 @@ class FullArticle extends React.Component {
       });
   }
 
-
   render() {
+    let articleBodyParagraphs;
+    if (this.state.article.body && this.state.article.body.length > 0) {
+      articleBodyParagraphs = this.state.article.body.map((paragraph, idx) =>
+        <p key={idx}>{paragraph}</p>
+      )
+    }
     return (
       <div className="full-article">
-      RENDER FULL ARTICLE HERE
-      {this.state.article.data}
+
+      {
+        this.state.article.urlToImage ?
+          <img src={this.state.article.urlToImage} className="articleImg" alt="#" />
+        :
+          <img src={defaultImage} className="defaultImg" alt="#" />        
+      }
+      <FavoriteButton article={this.state.article} />
+      {
+        this.state.article.title ?
+          <h3 className="articleTitle"> {this.state.article.title} </h3>
+        :
+        null
+      }
+      {
+        this.state.article.body ?
+          <div className="articleDescription">{articleBodyParagraphs}</div> :
+          <div className="articleDescription">{this.state.article.description}</div> 
+      }
+
+      {
+        this.state.article.source ?
+          <div className="articleSource">{this.state.article.source.name} {this.state.article.author ?
+            <p className="articleAuthor">| {this.state.article.author}</p> :
+          null}
+          </div> :
+          null
+      }  
+
+    <CommentsList article={this.state.article} />
+
       </div> 
     );
   }
 }
-      // {props.match.params.id}<br/>
 
 FullArticle.propTypes = {
   // article: PropTypes.shape({

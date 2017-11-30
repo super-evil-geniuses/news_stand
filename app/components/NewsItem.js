@@ -9,7 +9,7 @@ import CommentsList from './CommentsList';
 const NewsItem = ({ article }) => (
   <div className="newsItem">
     <Link to={{ 
-      pathname: '/articles/' + article.title,
+      pathname: '/articles/' + article._id,
     }}>
       {
         article.urlToImage ?
@@ -17,20 +17,14 @@ const NewsItem = ({ article }) => (
         :
           <img src={defaultImage} className="defaultImg" alt="#" />        
       }
-    </Link>
-    <FavoriteButton article={article} />
-    <Link to={{ 
-      pathname: '/articles/' + article.title,
-    }}>
     {
       article.title ?
-        <a href={article.url} target="_blank">
-          <h3 className="articleTitle"> {article.title} </h3>
-        </a>
+        <h3 className="articleTitle"> {article.title} </h3>
         :
         null
     }
     </Link>
+    <FavoriteButton article={article} />
     {
       article.description ?
         <p className="articleDescription">{article.description}</p> :

@@ -57,11 +57,6 @@ class App extends React.Component {
               )
           )}
           />
-          <Route 
-            exact 
-            path="/articles" 
-            render={() => <div> HI INSIDE OF ARTICLES </div>} 
-          />
           <Route path="/articles/:id" component={FullArticle} />
           <Route
             component={NotFound}
