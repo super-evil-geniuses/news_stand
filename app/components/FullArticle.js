@@ -4,6 +4,7 @@ import axios from 'axios';
 import defaultImage from '../public/assets/defaultImage';
 import FavoriteButton from './FavoriteButton';
 import CommentsList from './CommentsList';
+import Header from './Header';
 
 class FullArticle extends React.Component {
   constructor(props) {
@@ -54,7 +55,7 @@ class FullArticle extends React.Component {
     }
     return (
       <div className="full-article">
-
+        <Header />
         {
           this.state.article.urlToImage ?
             <img src={this.state.article.urlToImage} className="articleImg" alt="#" />
@@ -62,15 +63,29 @@ class FullArticle extends React.Component {
             <img src={defaultImage} className="defaultImg" alt="#" />        
         }
         <FavoriteButton
-          article={this.state.article}
-          onAddFavorite={this.onAddFavorite}
-          favorited={this.state.favorited}
-        />
+            article={this.state.article}
+            onAddFavorite={this.onAddFavorite}
+            favorited={this.state.favorited}
+          />
         {
           this.state.article.title ?
             <h3 className="articleTitle"> {this.state.article.title} </h3>
           :
           null
+        }
+        {
+          this.state.article.body ?
+            <div className="articleDescription">{articleBodyParagraphs}</div> :
+            <div className="articleDescription">{this.state.article.description}</div> 
+        }
+
+        {
+          this.state.article.source ?
+            <div className="articleSource">{this.state.article.source.name} {this.state.article.author ?
+              <p className="articleAuthor">| {this.state.article.author}</p> :
+            null}
+            </div> :
+            null
         }
         {
           this.state.article.body ?

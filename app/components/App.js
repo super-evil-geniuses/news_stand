@@ -41,7 +41,13 @@ class App extends React.Component {
           <Route
             exact
             path="/"
-            render={() => <Home search={search} getPreferences={getPreferences} />}
+            render={() =>
+              <Home
+                search={search}
+                getPreferences={getPreferences}
+                loggedIn={this.state.loggedIn}
+              />
+            }
           />
           <Route
             path="/login"
@@ -51,13 +57,23 @@ class App extends React.Component {
             path="/profile"
             render={() => (
             this.state.loggedIn ? (
-              <Profile user={this.state.user} />
+              <Profile 
+                user={this.state.user} 
+                loggedIn={this.state.loggedIn} 
+              />
             ) : (
               <Redirect to="/" />
               )
           )}
           />
-          <Route path="/articles/:id" component={FullArticle} />
+          <Route
+            path="/articles/:id"
+            render={() =>
+              <FullArticle
+                loggedIn={this.state.loggedIn}
+              />
+            }
+          />
           <Route
             component={NotFound}
           />
@@ -67,5 +83,4 @@ class App extends React.Component {
   }
 }
 
-// <Route path="/articles/:id" component={FullArticle} />
 export default App;
