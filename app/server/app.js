@@ -16,7 +16,7 @@ import addFavorite from './middleware/addFavorite';
 import scraper from './middleware/scraper.js';
 import addComment from './middleware/addComment';
 import getFavorites from './middleware/getFavorites';
-
+import findArticle from './middleware/findArticle';
 
 const app = express();
 const publicPath = express.static(path.join(__dirname, '../'));
@@ -45,6 +45,11 @@ app.use(BodyParser.urlencoded({ extended: true }));
 app.get('/articles', searchArticles, scraper, (request, response) => {
   const { articles } = request;
   response.json(articles);
+});
+
+app.get('/article/:id', findArticle, (request, response) => {
+  
+  response.json({article: {data: 'hello world'}});
 });
 
 app.get('/sources', getSources, (request, response) => {
