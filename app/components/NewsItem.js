@@ -1,22 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import defaultImage from '../public/assets/defaultImage';
+import { BrowserRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom';
 
 import FavoriteButton from './FavoriteButton';
 import CommentsList from './CommentsList';
+import FullArticle from './FullArticle';
 
 const NewsItem = ({ article }) => (
   <div className="newsItem">
-    {
-      article.urlToImage ?
-        <a href={article.url} target="_blank">
-          <img src={article.urlToImage} className="articleImg" alt="#" />
-        </a>
-        :
-        <a href={article.url} target="_blank">
-          <img src={defaultImage} className="defaultImg" alt="#" />
-        </a>
-    }
+    <Link to={{ 
+      pathname: '/articles/' + article.title,
+      state: 'article',
+    }}>
+      {
+        article.urlToImage ?
+            <img src={article.urlToImage} className="articleImg" alt="#" />
+
+          :
+
+            <img src={defaultImage} className="defaultImg" alt="#" />        
+      }
+    </Link>
     <FavoriteButton article={article} />
     {
       article.title ?
@@ -41,8 +46,8 @@ const NewsItem = ({ article }) => (
         </div> :
         null
     }
+       
     <CommentsList article={article} />
-
     <br />
   </div>
 );

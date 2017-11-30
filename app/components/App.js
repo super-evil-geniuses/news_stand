@@ -8,6 +8,7 @@ import Login from './Login';
 import NotFound from './NotFound';
 import Profile from './Profile';
 import getPreferences from './helpers/getPreferences';
+import FullArticle from './FullArticle';
 
 class App extends React.Component {
   constructor(props) {
@@ -56,6 +57,14 @@ class App extends React.Component {
               )
           )}
           />
+          <Route 
+            exact 
+            path="/articles" 
+            render={() => <div> HI INSIDE OF ARTICLES </div>} 
+          />
+          <Route path="/articles/:id" render={({ match }) => ( 
+            <FullArticle article={match}/> 
+            )} />
           <Route
             component={NotFound}
           />
@@ -65,4 +74,5 @@ class App extends React.Component {
   }
 }
 
+// <Route path="/articles/:id" component={FullArticle} />
 export default App;
