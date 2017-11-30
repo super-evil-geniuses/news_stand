@@ -9,17 +9,17 @@ import CommentsList from './CommentsList';
 const NewsItem = props => (
   <div className="newsItem">
     <Link to={{ 
-      pathname: '/articles/' + article._id,
+      pathname: '/articles/' + props.article._id,
     }}>
       {
-        article.urlToImage ?
-          <img src={article.urlToImage} className="articleImg" alt="#" />
+        props.article.urlToImage ?
+          <img src={props.article.urlToImage} className="articleImg" alt="#" />
         :
           <img src={defaultImage} className="defaultImg" alt="#" />        
       }
     {
-      article.title ?
-        <h3 className="articleTitle"> {article.title} </h3>
+      props.article.title ?
+        <h3 className="articleTitle"> {props.article.title} </h3>
     :
         null
     }

@@ -64,7 +64,7 @@ class FullArticle extends React.Component {
           null
       }  
 
-    <CommentsList article={this.state.article} />
+      <CommentsList article={this.state.article} />
 
       </div> 
     );
