@@ -1,5 +1,6 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import Comment from './Comment';
 
@@ -8,7 +9,7 @@ class CommentsList extends React.Component {
     super(props);
     this.state = {
       comment: '',
-      comments: [],
+      comments: props.article.comments || [],
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -18,10 +19,24 @@ class CommentsList extends React.Component {
   handleCommentSubmit(e) {
     // send post request to add comment to db
     e.preventDefault();
-    this.state.comments.push(this.state.comment);
-    this.setState({
-      comments: this.state.comments,
-    });
+
+    const commentObj = {
+      article: this.props.article,
+      comment: this.state.comment,
+    };
+
+    axios.post('/comments', commentObj)
+      .then((response) => {
+        if (response.data.message === 'comment added') {
+          this.setState({
+            comment: '',
+            comments: response.data.article.comments,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   handleChange(e) {
@@ -40,12 +55,28 @@ class CommentsList extends React.Component {
           </label>
           <input type="submit" value="Submit" />
         </form>
-        {this.state.comments.map((comment, idx) => (
-          <Comment comment={comment} key={comment + idx} />
+        {this.state.comments.map((commentObj, idx) => (
+          <Comment username={commentObj.username} comment={commentObj.comment} key={idx} />
         ))}
       </div>
     );
   }
 }
+
+CommentsList.propTypes = {
+  article: PropTypes.shape({
+    urlToImage: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    source: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    author: PropTypes.string,
+    url: PropTypes.string.isRequired,
+    body: PropTypes.string,
+    comments: PropTypes.array.isRequired,
+    favorites: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
 export default CommentsList;

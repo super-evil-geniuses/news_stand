@@ -31,7 +31,7 @@ class FavoriteButton extends React.Component {
     return (
       <div>
         <IconButton className="favbtn" onClick={() => this.onAddFavorite(this.props.article)}>
-          <Heart className={this.state.favorited ? 'favorited' : 'favorite'} />
+          <Heart className={this.state.favorited ? 'favorited' : 'favorite'} /> 5
         </IconButton>
       </div>
     );

@@ -14,6 +14,7 @@ import getPreferences from './middleware/getPreferences';
 import setPreferences from './middleware/setPreferences';
 import addFavorite from './middleware/addFavorite';
 import scraper from './middleware/scraper.js';
+import addComment from './middleware/addComment';
 
 
 const app = express();
@@ -63,6 +64,18 @@ app.post('/favorites', addFavorite, (request, response) => {
     response.status(201).end('favorite added');
   } else {
     response.status(200).end('please log in before adding to favorites');
+  }
+});
+
+app.post('/comments', addComment, (request, response) => {
+  if (request.user) {
+    const resObj = {
+      message: 'comment added',
+      article: request.article,
+    };
+    response.status(201).end(JSON.stringify(resObj));
+  } else {
+    response.status(200).end('please log in before commenting');
   }
 });
 
