@@ -8,18 +8,19 @@ class FavoriteButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      favorited: false,
+      favorited: props.favorited,
       numOfFavs: props.article.favorites || 0,
     };
     this.onAddFavorite = this.onAddFavorite.bind(this);
   }
 
   onAddFavorite(article) {
+    this.props.article.favorited = this.state.favorited;
     axios.post('/favorites', article)
       .then((response) => {
         if (response.data.message === 'favorite added') {
           this.setState({
-            favorited: true,
+            favorited: !this.state.favorited,
             numOfFavs: response.data.article.favorites,
           });
         }
@@ -53,5 +54,6 @@ FavoriteButton.propTypes = {
     author: PropTypes.string,
     url: PropTypes.string.isRequired,
     favorites: PropTypes.number.isRequired,
+    favorited: PropTypes.boolean,
   }).isRequired,
 };

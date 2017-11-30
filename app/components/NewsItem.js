@@ -5,43 +5,43 @@ import defaultImage from '../public/assets/defaultImage';
 import FavoriteButton from './FavoriteButton';
 import CommentsList from './CommentsList';
 
-const NewsItem = ({ article }) => (
+const NewsItem = props => (
   <div className="newsItem">
     {
-      article.urlToImage ?
-        <a href={article.url} target="_blank">
-          <img src={article.urlToImage} className="articleImg" alt="#" />
+      props.article.urlToImage ?
+        <a href={props.article.url} target="_blank">
+          <img src={props.article.urlToImage} className="articleImg" alt="#" />
         </a>
         :
-        <a href={article.url} target="_blank">
+        <a href={props.article.url} target="_blank">
           <img src={defaultImage} className="defaultImg" alt="#" />
         </a>
     }
-    <FavoriteButton article={article} />
+    <FavoriteButton article={props.article} favorited={props.favorited} />
     {
-      article.title ?
-        <a href={article.url} target="_blank">
-          <h3 className="articleTitle"> {article.title} </h3>
+      props.article.title ?
+        <a href={props.article.url} target="_blank">
+          <h3 className="articleTitle"> {props.article.title} </h3>
         </a>
         :
         null
     }
 
     {
-      article.description ?
-        <p className="articleDescription">{article.description}</p> :
+      props.article.description ?
+        <p className="articleDescription">{props.article.description}</p> :
         null
     }
 
     {
-      article.source.name ?
-        <div className="articleSource">{article.source.name} {article.author ?
-          <p className="articleAuthor">| {article.author}</p> :
+      props.article.source.name ?
+        <div className="articleSource">{props.article.source.name} {props.article.author ?
+          <p className="articleAuthor">| {props.article.author}</p> :
         null}
         </div> :
         null
     }
-    <CommentsList article={article} />
+    <CommentsList article={props.article} />
 
     <br />
   </div>
@@ -58,6 +58,7 @@ NewsItem.propTypes = {
     author: PropTypes.string,
     url: PropTypes.string.isRequired,
   }).isRequired,
+  favorited: PropTypes.bool.isRequired,
 };
 
 
