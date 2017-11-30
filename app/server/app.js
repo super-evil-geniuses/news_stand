@@ -13,6 +13,7 @@ import getSources from './middleware/getSources';
 import getPreferences from './middleware/getPreferences';
 import setPreferences from './middleware/setPreferences';
 import addFavorite from './middleware/addFavorite';
+import scraper from './middleware/scraper.js';
 
 
 const app = express();
@@ -39,7 +40,7 @@ app.use('/auth', authRoutes);
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
 
-app.get('/articles', searchArticles, (request, response) => {
+app.get('/articles', searchArticles, scraper, (request, response) => {
   const { articles } = request;
   response.json(articles);
 });

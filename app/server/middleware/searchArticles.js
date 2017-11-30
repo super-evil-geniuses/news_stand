@@ -1,5 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
+import Article from '../database/models/article.js'
 
 const searchArticles = (request, response, next) => {
 
@@ -30,6 +31,15 @@ const searchArticles = (request, response, next) => {
   axios
     .get(url)
     .then((newsResponse) => {
+      ///////////////////////////////
+      // here is where we need to  //
+      // check db                  //
+      // if it's not in the db {   //
+      // send the web crawler      //
+      //     store into the db     //
+      // and store locally  }      //
+      // and store locally  }      //
+      ///////////////////////////////
       request.articles = newsResponse.data.articles;
     })
     .catch((err) => {
