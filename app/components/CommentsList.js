@@ -92,7 +92,7 @@ CommentsList.propTypes = {
     }),
     author: PropTypes.string,
     url: PropTypes.string.isRequired,
-    body: PropTypes.string,
+    body: PropTypes.array,
     comments: PropTypes.array.isRequired,
     favorites: PropTypes.number.isRequired,
   }).isRequired,

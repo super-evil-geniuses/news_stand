@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import uniq from 'node-uniq';
+import axios from 'axios';
 
 import NewsList from './NewsList';
 
@@ -14,17 +15,24 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
 
-    const uniqArticles = uniq(this.props.user.articles, i => i.url);
-
     this.state = {
       username: this.props.user.username,
       topics: this.props.user.topics,
       selectedSources: this.props.user.selectedSources,
-      articles: uniqArticles,
+      articles: [],
       img: this.props.user.profileImg,
     };
     this.firstName = this.state.username.split(' ')[0];
     this.lastName = this.state.username.split(' ')[1];
+  }
+
+  componentWillMount() {
+    axios.get('/favorites')
+      .then((response) => {
+        this.setState({
+          articles: response.data.favorites,
+        });
+      });
   }
 
   render() {
@@ -74,7 +82,10 @@ class Profile extends React.Component {
             {/* turnary operator to show if now articles are liked */}
             {this.state.articles.length === 0 ?
               <p>Articles you like will be shown here</p> :
-              <NewsList newsArticles={this.props.user.articles} />
+              <NewsList
+                newsArticles={this.state.articles}
+                favorites={this.state.articles}
+              />
             }
           </div>
         </div>
@@ -89,7 +100,6 @@ Profile.propTypes = {
     topics: PropTypes.arrayOf(PropTypes.string),
     selectedSources: PropTypes.arrayOf(PropTypes.object),
     profileImg: PropTypes.string,
-    articles: PropTypes.arrayOf(PropTypes.object).isRequired,
   }).isRequired,
 };
 
