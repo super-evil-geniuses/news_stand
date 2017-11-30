@@ -15,6 +15,7 @@ import setPreferences from './middleware/setPreferences';
 import addFavorite from './middleware/addFavorite';
 import scraper from './middleware/scraper.js';
 import addComment from './middleware/addComment';
+import getFavorites from './middleware/getFavorites';
 import findArticle from './middleware/findArticle';
 
 const app = express();
@@ -55,9 +56,9 @@ app.get('/sources', getSources, (request, response) => {
   response.json(request.sources);
 });
 
-app.get('/preferences', getPreferences, searchArticles, scraper, (request, response) => {
-  const { articles, preferences } = request;
-  response.json({ articles, preferences });
+app.get('/preferences', getPreferences, searchArticles, scraper, getFavorites, (request, response) => {
+  const { articles, preferences, favorites } = request;
+  response.json({ articles, preferences, favorites });
 });
 
 app.post('/preferences', setPreferences, (request, response) => {

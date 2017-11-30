@@ -9,15 +9,22 @@ const NewsList = props => (
     {props.newsArticles.length === 0 ?
       <div id="no-articles">No articles found. Please try another search</div> :
       props.newsArticles && uniq(props.newsArticles, i => i.url)
-        .map(article => (
-          <NewsItem article={article} key={article.url} />
-        ))
+        .map((article) => {
+          let favorited = false;
+          props.favorites.forEach((favArticle) => {
+            if (article.url === favArticle.url) {
+              favorited = true;
+            }
+          });
+          return <NewsItem article={article} key={article.url} favorited={favorited} />;
+        })
     }
   </div>
 );
 
 NewsList.propTypes = {
   newsArticles: PropTypes.arrayOf(PropTypes.object).isRequired,
+  favorites: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default NewsList;

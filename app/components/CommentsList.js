@@ -10,10 +10,12 @@ class CommentsList extends React.Component {
     this.state = {
       comment: '',
       comments: props.article.comments || [],
+      showComments: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+    this.toggleCommentView = this.toggleCommentView.bind(this);
   }
 
   handleCommentSubmit(e) {
@@ -45,19 +47,36 @@ class CommentsList extends React.Component {
     });
   }
 
+  toggleCommentView() {
+    this.setState({
+      showComments: !this.state.showComments,
+    });
+  }
+
   render() {
+    let renderBody;
+    if (this.state.showComments) {
+      renderBody = (
+        <div className="CommentsList">
+          <br />
+          {this.state.comments.map((commentObj, idx) => (
+            <Comment username={commentObj.username} comment={commentObj.comment} key={idx} />
+          ))}
+          <br />
+          <form onSubmit={this.handleCommentSubmit}>
+            <label>
+              Comment:
+              <input type="text" value={this.state.comment} onChange={this.handleChange} />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      );
+    }
     return (
-      <div className="CommentsList">
-        <form onSubmit={this.handleCommentSubmit}>
-          <label>
-            Comment:
-            <input type="text" value={this.state.comment} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-        {this.state.comments.map((commentObj, idx) => (
-          <Comment username={commentObj.username} comment={commentObj.comment} key={idx} />
-        ))}
+      <div>
+        <button onClick={this.toggleCommentView}>{this.state.comments.length} comment(s)</button>
+        { renderBody }
       </div>
     );
   }
