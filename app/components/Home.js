@@ -20,6 +20,7 @@ class Home extends React.Component {
         id: 'techcrunch',
       }],
       topics: ['net neutrality'],
+      favorites: [],
     };
 
     this.onRefreshClick = this.onRefreshClick.bind(this);
@@ -41,6 +42,7 @@ class Home extends React.Component {
         this.setState({
           topics: articlesAndPreferences.data.preferences.topics,
           selectedSources: articlesAndPreferences.data.preferences.selectedSources,
+          favorites: articlesAndPreferences.data.favorites,
         });
       }
       this.setState({ articles: articlesAndPreferences.data.articles });
@@ -160,7 +162,7 @@ class Home extends React.Component {
           </div>
 
           <div className="articlesContainer">
-            <NewsList newsArticles={this.state.articles} />
+            <NewsList newsArticles={this.state.articles} favorites={this.state.favorites} />
           </div>
         </div>
       </div>

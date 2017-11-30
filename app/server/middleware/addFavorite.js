@@ -15,10 +15,18 @@ const addFavorite = (request, response, next) => {
     });
 
     const articleFindCriteria = { url: request.body.url };
-    const articleToUpdate = { $inc: { favorites: 1 } };
-
     const userFindCriteria = { googleId: request.user.googleId };
-    const userToUpdate = { $addToSet: { articles: favorited } };
+
+    let articleToUpdate;
+    let userToUpdate;
+
+    if (!request.body.favorited) {
+      articleToUpdate = { $inc: { favorites: 1 } };
+      userToUpdate = { $addToSet: { articles: favorited } };
+    } else {
+      articleToUpdate = { $inc: { favorites: -1 } };
+      userToUpdate = { $pull: { articles: { url: request.body.url } } };
+    }
 
     Article.findOneAndUpdate(articleFindCriteria, articleToUpdate, { new: true })
       .then((doc) => {
