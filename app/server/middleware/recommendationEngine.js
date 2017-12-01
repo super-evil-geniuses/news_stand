@@ -190,3 +190,9 @@ createRecommendedList = (favArray) => {
     return b.proximity - a.proximity;
   });
 };
+
+
+// each word would have a count of occurances in articles
+// each article would have a count of frequency of that word
+//robert c martin - clean code
+//database sorting

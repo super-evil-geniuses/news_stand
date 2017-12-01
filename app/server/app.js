@@ -18,6 +18,7 @@ import addComment from './middleware/addComment';
 import getFavorites from './middleware/getFavorites';
 import findArticle from './middleware/findArticle';
 
+
 const app = express();
 const publicPath = express.static(path.join(__dirname, '../'));
 const indexPath = path.join(__dirname, '../index.html');
@@ -60,6 +61,10 @@ app.get('/preferences', getPreferences, searchArticles, scraper, getFavorites, (
   const { articles, preferences, favorites } = request;
   response.json({ articles, preferences, favorites });
 });
+
+// app.get('/recommended', /* find recommended list */ (request, response) => {
+//   response.json(request.recommended);
+// });
 
 app.post('/preferences', setPreferences, (request, response) => {
   // console.log('ABOUT TO SEND', request.updatedUser)

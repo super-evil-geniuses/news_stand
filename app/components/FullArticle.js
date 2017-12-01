@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import comedyParser from './helpers/comedyParser';
 import defaultImage from '../public/assets/defaultImage';
 import FavoriteButton from './FavoriteButton';
 import CommentsList from './CommentsList';
@@ -12,6 +13,7 @@ class FullArticle extends React.Component {
     this.state = {
       article: 'newspaper',
       favorited: false,
+      funny: false,
     };
     this.onAddFavorite = this.onAddFavorite.bind(this);
   }
@@ -49,7 +51,11 @@ class FullArticle extends React.Component {
   render() {
     let articleBodyParagraphs;
     if (this.state.article.body && this.state.article.body.length > 0) {
-      articleBodyParagraphs = this.state.article.body.map((paragraph, idx) =>
+      let bodyArray = this.state.article.body
+      if(this.state.funny) {
+        bodyArray = comedyParser(this.state.article.body);
+      }
+      articleBodyParagraphs = bodyArray.map((paragraph, idx) =>
         <p key={idx}>{paragraph}</p>
       )
     }
