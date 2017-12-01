@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import Button from 'material-ui/Button';
 
 import Comment from './Comment';
 
@@ -29,6 +30,10 @@ class CommentsList extends React.Component {
   handleCommentSubmit(e) {
     // send post request to add comment to db
     e.preventDefault();
+
+    if (this.state.comment === '') {
+      return;
+    }
 
     const commentObj = {
       article: this.props.article,
@@ -65,25 +70,36 @@ class CommentsList extends React.Component {
     let renderBody;
     if (this.state.showComments) {
       renderBody = (
-        <div className="CommentsList">
-          <br />
-          {this.state.comments.map((commentObj, idx) => (
-            <Comment username={commentObj.username} comment={commentObj.comment} key={idx} />
-          ))}
-          <br />
-          <form onSubmit={this.handleCommentSubmit}>
-            <label>
+        <div className="CommentSection">
+          <div className="CommentsList">
+            {this.state.comments.map((commentObj, idx) => (
+              <Comment
+                username={commentObj.username}
+                comment={commentObj.comment}
+                profileImg={commentObj.profileImg}
+                commentedAt={commentObj.commentedAt}
+                key={idx}
+              />
+            ))}
+          </div>
+          <form className="CommentInput" onSubmit={this.handleCommentSubmit}>
+            <label id="label">
               Comment:
-              <input type="text" value={this.state.comment} onChange={this.handleChange} />
+              <textarea
+                id="field" type="text" value={this.state.comment} onChange={this.handleChange}
+              />
+              <Button raised color="primary" id="submit" type="submit">Submit</Button>
             </label>
-            <input type="submit" value="Submit" />
           </form>
         </div>
       );
     }
     return (
       <div>
-        <button onClick={this.toggleCommentView}>{this.state.comments.length} comment(s)</button>
+        <Button raised color="primary" id="showComments" onClick={this.toggleCommentView}>
+          <img className="commentImg" src="https://image.flaticon.com/icons/svg/54/54761.svg" alt="#" />
+          {this.state.comments.length} comment(s)
+        </Button>
         { renderBody }
       </div>
     );

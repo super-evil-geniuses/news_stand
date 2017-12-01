@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import Article from '../database/models/article';
 
 const addComment = (request, response, next) => {
@@ -5,6 +7,8 @@ const addComment = (request, response, next) => {
     const comment = {
       username: request.user.username,
       comment: request.body.comment,
+      profileImg: request.user.profileImg,
+      commentedAt: moment(),
     };
 
     const findCriteria = { url: request.body.article.url };
