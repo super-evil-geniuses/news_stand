@@ -352,3 +352,26 @@
   margin-top: 50px;
 }
 
+/* ---------------------------- */
+/*      Comment Component       */
+/* ---------------------------- */
+
+.Comment {
+  margin: 10px;
+  margin-bottom: 20px;
+}
+
+.Comment .username {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.Comment .profileImg {
+  float: left;
+  width: auto;
+  margin-right: 10px;
+}
+
+.CommentsList {
+  background-color: aliceblue;
+}

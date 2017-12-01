@@ -5,6 +5,7 @@ const addComment = (request, response, next) => {
     const comment = {
       username: request.user.username,
       comment: request.body.comment,
+      profileImg: request.user.profileImg,
     };
 
     const findCriteria = { url: request.body.article.url };

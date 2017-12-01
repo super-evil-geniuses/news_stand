@@ -68,7 +68,7 @@ class CommentsList extends React.Component {
         <div className="CommentsList">
           <br />
           {this.state.comments.map((commentObj, idx) => (
-            <Comment username={commentObj.username} comment={commentObj.comment} key={idx} />
+            <Comment username={commentObj.username} comment={commentObj.comment} profileImg={commentObj.profileImg} key={idx} />
           ))}
           <br />
           <form onSubmit={this.handleCommentSubmit}>
