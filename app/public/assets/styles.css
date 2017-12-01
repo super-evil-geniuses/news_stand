@@ -356,22 +356,80 @@
 /*      Comment Component       */
 /* ---------------------------- */
 
+textarea {
+  resize: none;
+}
+
 .Comment {
-  margin: 10px;
-  margin-bottom: 20px;
+  margin: 10px 10px 20px 10px;
+  word-wrap: break-word;
+  overflow: auto;
 }
 
 .Comment .username {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: bold;
+  float: left;
+  width: 60%;
+  margin-right: 10px;
+}
+
+.Comment .commentedAt {
+  float: right;
+  margin-right: 10px;
+  font-style: italic;
+  color: gray;
+}
+
+.Comment .comment {
+  float: left;
+  width: 70%;
+  margin-right: 15%;
 }
 
 .Comment .profileImg {
   float: left;
-  width: auto;
+  width: 10%;
   margin-right: 10px;
 }
 
-.CommentsList {
+.CommentSection {
   background-color: aliceblue;
+  margin-top: 20px;
+}
+
+.CommentInput {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.CommentInput #label {
+  width: 100%;
+}
+
+.CommentInput #field {
+  width: 100%;
+  margin: 5px 0 10px;
+  display: -webkit-box;
+}
+
+.CommentInput #submit {
+  float: right;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.CommentsList {
+  overflow-y: scroll;
+  max-height: 400px;
+}
+
+#showComments {
+  font-size: 12px;
+}
+
+.commentImg {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
 }
