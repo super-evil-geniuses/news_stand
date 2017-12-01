@@ -8,21 +8,41 @@ import CommentsList from './CommentsList';
 class FullArticle extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       article: 'newspaper',
+      favorited: false,
     };
+    this.onAddFavorite = this.onAddFavorite.bind(this);
   }
 
   componentDidMount() {
     axios.get('/article/'+this.props.match.params.id)
       .then((response) => {
+        console.log(response.data);
         this.setState({
-          article: response.data,
+          article: response.data.article,
+          favorited: response.data.favorited,
         });
       })
       .catch((err) => {
         throw err;
+      });
+  }
+
+  onAddFavorite(article) {
+    const option = article;
+    option.favorited = this.state.favorited;
+    axios.post('/favorites', option)
+      .then((response) => {
+        if (response.data.message === 'favorite added') {
+          this.setState({
+            article: response.data.article,
+            favorited: !this.state.favorited,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 
@@ -36,35 +56,39 @@ class FullArticle extends React.Component {
     return (
       <div className="full-article">
 
-      {
-        this.state.article.urlToImage ?
-          <img src={this.state.article.urlToImage} className="articleImg" alt="#" />
-        :
-          <img src={defaultImage} className="defaultImg" alt="#" />        
-      }
-      <FavoriteButton article={this.state.article} />
-      {
-        this.state.article.title ?
-          <h3 className="articleTitle"> {this.state.article.title} </h3>
-        :
-        null
-      }
-      {
-        this.state.article.body ?
-          <div className="articleDescription">{articleBodyParagraphs}</div> :
-          <div className="articleDescription">{this.state.article.description}</div> 
-      }
-
-      {
-        this.state.article.source ?
-          <div className="articleSource">{this.state.article.source.name} {this.state.article.author ?
-            <p className="articleAuthor">| {this.state.article.author}</p> :
-          null}
-          </div> :
+        {
+          this.state.article.urlToImage ?
+            <img src={this.state.article.urlToImage} className="articleImg" alt="#" />
+          :
+            <img src={defaultImage} className="defaultImg" alt="#" />        
+        }
+        <FavoriteButton
+          article={this.state.article}
+          onAddFavorite={this.onAddFavorite}
+          favorited={this.state.favorited}
+        />
+        {
+          this.state.article.title ?
+            <h3 className="articleTitle"> {this.state.article.title} </h3>
+          :
           null
-      }  
+        }
+        {
+          this.state.article.body ?
+            <div className="articleDescription">{articleBodyParagraphs}</div> :
+            <div className="articleDescription">{this.state.article.description}</div> 
+        }
 
-      <CommentsList article={this.state.article} />
+        {
+          this.state.article.source ?
+            <div className="articleSource">{this.state.article.source.name} {this.state.article.author ?
+              <p className="articleAuthor">| {this.state.article.author}</p> :
+            null}
+            </div> :
+            null
+        }  
+
+        <CommentsList article={this.state.article} />
 
       </div> 
     );

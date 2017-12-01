@@ -1,50 +1,86 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import defaultImage from '../public/assets/defaultImage';
 
 import FavoriteButton from './FavoriteButton';
 import CommentsList from './CommentsList';
 
-const NewsItem = props => (
-  <div className="newsItem">
-    <Link to={{ 
-      pathname: '/articles/' + props.article._id,
-    }}>
-      {
-        props.article.urlToImage ?
-          <img src={props.article.urlToImage} className="articleImg" alt="#" />
-        :
-          <img src={defaultImage} className="defaultImg" alt="#" />        
-      }
-    {
-      props.article.title ?
-        <h3 className="articleTitle"> {props.article.title} </h3>
-    :
-        null
-    }
-    </Link>
-    <FavoriteButton article={props.article} favorited={props.favorited} />
-    {
-      props.article.description ?
-        <p className="articleDescription">{props.article.description}</p> :
-        null
-    }
+class NewsItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      article: props.article,
+      favorited: props.favorited,
+    };
+    this.onAddFavorite = this.onAddFavorite.bind(this);
+  }
 
-    {
-      props.article.source.name ?
-        <div className="articleSource">{props.article.source.name} {props.article.author ?
-          <p className="articleAuthor">| {props.article.author}</p> :
-        null}
-        </div> :
-        null
-    }
+  onAddFavorite(article) {
+    const option = article;
+    option.favorited = this.state.favorited;
+    axios.post('/favorites', option)
+      .then((response) => {
+        if (response.data.message === 'favorite added') {
+          this.setState({
+            article: response.data.article,
+            favorited: !this.state.favorited,
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-    <CommentsList article={props.article} />
+  render() {
+    return (
+      <div className="newsItem">
+        <Link to={{
+          pathname: `/articles/${this.state.article._id}`,
+          }}
+        >
+          {
+            this.state.article.urlToImage ?
+              <img src={this.state.article.urlToImage} className="articleImg" alt="#" />
+            :
+              <img src={defaultImage} className="defaultImg" alt="#" />
+          }
+          {
+            this.props.article.title ?
+              <h3 className="articleTitle"> {this.state.article.title} </h3>
+          :
+              null
+          }
+        </Link>
+        <FavoriteButton
+          article={this.state.article}
+          favorited={this.state.favorited}
+          onAddFavorite={this.onAddFavorite}
+        />
+        {
+          this.props.article.description ?
+            <p className="articleDescription">{this.state.article.description}</p> :
+            null
+        }
 
-    <br />
-  </div>
-);
+        {
+          this.state.article.source.name ?
+            <div className="articleSource">{this.state.article.source.name} {this.state.article.author ?
+              <p className="articleAuthor">| {this.state.article.author}</p> :
+            null}
+            </div> :
+            null
+        }
+
+        <CommentsList article={this.state.article} />
+
+        <br />
+      </div>
+    );
+  }
+}
 
 NewsItem.propTypes = {
   article: PropTypes.shape({
@@ -56,6 +92,9 @@ NewsItem.propTypes = {
     }),
     author: PropTypes.string,
     url: PropTypes.string.isRequired,
+    body: PropTypes.array,
+    comments: PropTypes.array,
+    favorites: PropTypes.number.isRequired,
   }).isRequired,
   favorited: PropTypes.bool.isRequired,
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import uniq from 'node-uniq';
 import axios from 'axios';
 
 import NewsList from './NewsList';
