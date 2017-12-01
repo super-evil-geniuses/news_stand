@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom';
 import _ from 'underscore';
 
 const Header = (props) => {
-  // const loggedInOrOutLink = props.loggedIn ?
-    // <a href="/auth/logout">Logout</a> :
-    // <Link to="/login">Login</Link> ;
   const loginLink = <Link to="/login">Login</Link>;
   const logoutLink = <a href="/auth/logout">Logout</a>;
 
