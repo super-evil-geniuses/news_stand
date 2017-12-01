@@ -15,11 +15,14 @@ const searchArticles = (request, response, next) => {
     url += `&q=${formattedTopic}`;
   }
   if (sources) {
-    console.log('LOOOOOOOK', Array.isArray(sources), sources[0])
-    let parsedSources = sources.map((e) => JSON.parse(e));
-    console.log(parsedSources);
+    let parsedSources = sources.map((e) => {
+      if (typeof e === 'string') {
+        return JSON.parse(e);
+      }
+      return e; 
+    });
     const formattedSource = parsedSources.map((source) => {
-      let parsedSource = source.id;
+      let parsedSource = source;
       if (typeof parsedSource === 'string') {
         parsedSource = JSON.parse(parsedSource);
       }
@@ -31,6 +34,7 @@ const searchArticles = (request, response, next) => {
   }
 
   // Request information from newsAPI`
+  console.log(url);
   axios
     .get(url)
     .then((newsResponse) => {
