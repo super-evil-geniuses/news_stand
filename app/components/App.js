@@ -46,6 +46,7 @@ class App extends React.Component {
                 search={search}
                 getPreferences={getPreferences}
                 loggedIn={this.state.loggedIn}
+                user={this.state.user}
               />
             }
           />
@@ -58,8 +59,8 @@ class App extends React.Component {
             render={() => (
             this.state.loggedIn ? (
               <Profile 
-                user={this.state.user} 
-                loggedIn={this.state.loggedIn} 
+                user={this.state.user}
+                loggedIn={this.state.loggedIn}
               />
             ) : (
               <Redirect to="/" />
@@ -68,9 +69,11 @@ class App extends React.Component {
           />
           <Route
             path="/articles/:id"
-            render={() =>
+            render={({match}) =>
               <FullArticle
                 loggedIn={this.state.loggedIn}
+                user={this.state.user}
+                match={match}
               />
             }
           />

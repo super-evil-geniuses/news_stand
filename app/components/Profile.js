@@ -38,7 +38,10 @@ class Profile extends React.Component {
     return (
       <div id="profile">
         <div className="headerContainer">
-          <Header />
+          <Header 
+            loggedIn={this.props.loggedIn} 
+            user={this.props.user}
+          />
         </div>
         <div className="col-1-3">
 

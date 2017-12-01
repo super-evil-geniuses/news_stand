@@ -132,7 +132,10 @@ class Home extends React.Component {
     return (
       <div>
         <div className="headerContainer">
-          <Header loggedIn={this.props.loggedIn}/>
+          <Header 
+            loggedIn={this.props.loggedIn} 
+            user={this.props.user}
+          />
         </div>
 
         <div className="contentContainer">

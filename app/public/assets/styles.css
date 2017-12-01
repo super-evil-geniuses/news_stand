@@ -6,22 +6,14 @@
   -moz-box-shadow: 0px 2px 20px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 2px 20px 0px rgba(0,0,0,0.75);
   padding: 10px;
-  width: 100%;
   overflow: hidden;
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
   width: 100%; /* Full width */
   z-index: 100;
   background-color: white;
-}
-
-.headerContainer {
+  column-count: 2;
   height: 150px;
-  width: 100%;
-}
-
-.btn {
-
 }
 
 .refresh {
@@ -41,12 +33,52 @@
   margin-right: 10px;
 }
 
-.nav-bar {
-  display: inline-block;
+.nav-left {
+  float: left;
+  width: 50%;
   margin: 10px 5px;
 }
 
-.
+.logo {
+  height: 48px;
+  width: 50%;
+  float: left;
+}
+
+.profile-nav{
+  height: 48px;
+  width: 50%;
+  float: left;
+  padding-top: 14px;
+  padding-left: 10px;
+}
+
+.nav-right {
+  width: 50%;
+  float: left;
+}
+
+.user-stuff {
+  width: 66%;
+  float: right;
+  display: inline-block;
+  padding-right: 20px;
+}
+
+.profile-pic-nav {
+  float: left;
+}
+.user-name {
+  display: block;
+  float: left;
+  padding-right: 5px;
+}
+
+.login-out {
+  width: 33%;
+  float: right;
+  display: inline-block;
+}
 
 .btn-refresh {
   float: right;
@@ -101,9 +133,6 @@
   border-radius: 5px;
 }
 
-.logo {
-  height: 48px;
-}
 
 .articleTitle {
 
