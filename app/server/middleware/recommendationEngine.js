@@ -1,37 +1,8 @@
 const sw = require('stopword');
 const _ = require('underscore');
-
 const WordPOS = require('wordpos'),
+
 wordpos = new WordPOS();
-
-wordpos.getNouns('The angry bear chased the frightened little squirrel.', function(result){
-console.log(result);
-});
-
-const art1 = {
-  id: 1,
-  body: ['hello trump the', 'white house', 'politics']
-};
-const art2 = {
-  id: 2,
-  body: ['goldfish', 'puppies']
-};
-const art3 = {
-  id: 3,
-  body: ['trump white house the', 'politics']
-};
-const art4 = {
-  id: 4,
-  body: ['hello trump the', 'white house', 'politics']
-};
-const art5 = {
-  id: 5,
-  body: ['goldfish, are really great trump is too', 'puppies']
-};
-const art6 = {
-  id: 6,
-  body: ['trump white house the', 'politics puppies']
-};
 
 const fullArt1 = { 
   _id: '5a20c5250936ec7e4a19b6a2',
@@ -155,9 +126,6 @@ const fullArt3 = {
   source: { name: 'CNN' }
 }
 
-const articles = [art1, art4, art5, art6];
-const liked = [art2, art3];
-
 const fullArticles = [fullArt1, fullArt2, fullArt3];
 
 createEdge = (article1, article2) => {
@@ -172,9 +140,6 @@ createEdge = (article1, article2) => {
     article2.edges[article1._id] = count;
   }
 }
-
-// add wordmap to every article
-// add edges to every article
 
 const addedEdges = fullArticles.map((article) => {
   const wordMap = {};
@@ -199,7 +164,7 @@ Promise.all(addedEdges)
       createEdge(articleObjArr[i], articleObjArr[j]);
     }
   }
-  console.log(createRecommendedList([articleObjArr[0]]));
+  console.log(createRecommendedList([articleObjArr[0]])); // THIS NEEDS TO SHOW ACTUAL FAVORITES!
 });
 
 createRecommendedList = (favArray) => {
@@ -225,86 +190,3 @@ createRecommendedList = (favArray) => {
     return b.proximity - a.proximity;
   });
 };
-
-
-
-// class Article {
-//   constructor(article) {
-//     this.id = article.id;
-//     this.wordMap = {};
-//     this.edges = {};
-//     this.createWordMap(article.body.join(' '));
-//   }
-
-//   createWordMap(body) {
-//     const wordsArray = body.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '').split(' ');
-//     const goWords = sw.removeStopwords(wordsArray);
-//     goWords.forEach((word) => {
-//       this.wordMap[word] = 1; // we could weight this using frequency * inverse appearance
-//     });
-//   }
-
-//   createEdge(otherArticle) {
-//     if (!this.edges[otherArticle.id]) {
-//       let count = 0;
-//       Object.keys(this.wordMap).forEach((word) => {
-//         if (otherArticle.wordMap[word]) {
-//           count += 1;
-//         }
-//       });
-//       this.edges[otherArticle.id] = count;
-//     }
-//   }
-// }
-
-// const graphArticles = articles.map((article) => {
-//   return new Article(article);
-// });
-
-// for (let i = 0; i < graphArticles.length - 1; i++) {
-//   for (let j = i + 1; j < graphArticles.length; j++) {
-//     graphArticles[i].createEdge(graphArticles[j]);
-//   }
-// }
-
-// console.log(graphArticles[0]);
-
-// input: array of favorited articles
-//output: arry of recommended articles from most to least (without favorited!)
-
-// createRecommendedList(favArray) {
-//   const recommendedEdges = {};
-//   const reccommendedList = [];
-//   favArray.forEach((article) => {
-//     Object.keys(article.edges).forEach((articleId) => {
-//       if(recommendedEdges[articleId] !== 'favorite') {
-//         recommendedEdges[articleId] = {
-//           article: article,
-//           proximity: recommendedEdges[articleId] ? recommendedEdges[articleId].proximity + article.edges[articleId] : article.edges[articleId]
-//         };
-//       }
-//     });
-//     recommendedEdges[article.id] = 'favorite';
-//   });
-
-//   Object.keys(recommendedEdges).forEach((articleId) => {
-//     reccommendedList.push(articleId);
-//   }
-
-
-//   return _.map(recommendedEdges, ((articleObj) => {
-//     return articleObj
-//   }, [])).sort((a, b) => {
-//     return a.
-//   })
-//   // for each article in arr
-//   //  for each edge in edges
-
-// }
-//    
-//  
- 
-
-
-// liked articles
-// unliked articles
