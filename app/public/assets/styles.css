@@ -5,15 +5,15 @@
   -webkit-box-shadow: 0px 2px 20px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 2px 20px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 2px 20px 0px rgba(0,0,0,0.75);
-  padding: 10px;
   overflow: hidden;
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
   width: 100%; /* Full width */
   z-index: 100;
   background-color: white;
-  column-count: 2;
-  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .refresh {
@@ -33,51 +33,31 @@
   margin-right: 10px;
 }
 
-.nav-left {
-  float: left;
-  width: 50%;
-  margin: 10px 5px;
+.logo-img {
+  height: 70px;
 }
 
-.logo {
-  height: 48px;
-  width: 50%;
-  float: left;
-}
-
-.profile-nav{
-  height: 48px;
-  width: 50%;
-  float: left;
-  padding-top: 14px;
-  padding-left: 10px;
-}
-
-.nav-right {
-  width: 50%;
-  float: left;
+.login-link {
+  padding-right: 10px;
 }
 
 .user-stuff {
-  width: 66%;
-  float: right;
-  display: inline-block;
-  padding-right: 20px;
+  padding-right: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .profile-pic-nav {
-  float: left;
-}
-.user-name {
-  display: block;
-  float: left;
-  padding-right: 5px;
+  min-width: 55px;
 }
 
-.login-out {
-  width: 33%;
-  float: right;
-  display: inline-block;
+.profile-pic-nav-img {
+  border-radius: 100%;
+}
+.user-stuff-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .btn-refresh {

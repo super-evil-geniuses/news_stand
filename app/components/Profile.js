@@ -37,12 +37,10 @@ class Profile extends React.Component {
   render() {
     return (
       <div id="profile">
-        <div className="headerContainer">
-          <Header 
-            loggedIn={this.props.loggedIn} 
-            user={this.props.user}
-          />
-        </div>
+        <Header 
+          loggedIn={this.props.loggedIn} 
+          user={this.props.user}
+        />
         <div className="col-1-3">
 
           <div className="sidebar">
