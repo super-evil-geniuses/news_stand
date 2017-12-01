@@ -47,7 +47,6 @@ class Home extends React.Component {
 
     this.onRefreshClick = this.onRefreshClick.bind(this);
     this.onToggleClick = this.onToggleClick.bind(this);
-    // this.onAddSource = this.onAddSource.bind(this);
     this.onRemoval = this.onRemoval.bind(this);
     this.onTopicSearch = this.onTopicSearch.bind(this);
     this.setPreferences = this.setPreferences.bind(this);
@@ -92,7 +91,7 @@ class Home extends React.Component {
     let arr = [];
     for (const source in sources) {
       if (sources[source].selected) {
-        arr.push(sources[source])
+        arr.push({label: sources[source].label, id: sources[source].id})
       }
     }
     return arr;
@@ -101,11 +100,12 @@ class Home extends React.Component {
   onSourceClick(sourceId, val) {
     let oldState = this.state.sources;
     oldState[sourceId].selected = val;
-    this.setState({ sources: oldState})
-    this.onRefreshClick();
-    if (this.props.loggedIn) {
-      this.setPreferences()
-    }
+    this.setState({ sources: oldState}, (data) => {
+      this.onRefreshClick();
+      if (this.props.loggedIn) {
+        this.setPreferences()
+      }
+    })
   }
 
   onRefreshClick() {
@@ -127,20 +127,6 @@ class Home extends React.Component {
       this.getArticles(options);
     });
   }
-
-  // onAddSource(source) {
-  //   const sources = this.state.selectedSources;
-  //   sources.push(source);
-  //   this.setState({ selectedSources: sources });
-
-  //   const { topics, sortBy } = this.state;
-  //   const options = {
-  //     topics,
-  //     selectedSources: sources,
-  //     sortBy,
-  //   };
-  //   this.getArticles(options);
-  // }
 
 //can be reformatted to only work for topics
   onRemoval(index, type) {

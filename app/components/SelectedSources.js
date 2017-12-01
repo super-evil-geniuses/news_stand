@@ -7,25 +7,13 @@ class SelectedSources extends React.Component{
   constructor(props) {
     super(props);
   }
-
-  // setSwitches() {
-  //   let sources = this.props.sources;
-  //   console.log(JSON.stringify(sources));
-  //   for (const source in sources) {
-  //     console.log('inside of for loop', sources[source])
-  //     console.log(source, sources[source].selected)
-  //     document.getElementById(source).checked = sources[source].selected
-  //   }
-  // }
-
-  // componentDidMount() {
-  //   this.setSwitches();
-  // }
-
   
   render () {
     return (
       <div className="selectedSourcesContainer">
+      <br />
+      <h4>Choose your sources</h4>
+      <br />
         <input type="checkbox" id="cnn" name="subscribe" value="CNN"
         checked={this.props.sources.cnn.selected} 
         onChange={(e) => {
