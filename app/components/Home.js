@@ -132,21 +132,29 @@ class Home extends React.Component {
     return (
       <div>
         <div className="headerContainer">
-          <Header
-            onRefreshClick={this.onRefreshClick}
-            onToggleClick={this.onToggleClick}
-            sortBy={this.state.sortBy}
+          <Header 
+            loggedIn={this.props.loggedIn} 
+            user={this.props.user}
           />
         </div>
+
         <div className="contentContainer">
           <div className="topicsAndSourcesContainer">
-            <button
-              id="savePreferences"
-              className="btn btn-primary"
-              onClick={this.setPreferences}
-            >
-              Save Preferences
-            </button>
+            <div>
+              <p> Viewing {this.state.sortBy === 'popularity' ? 'most popular' : 'most recent'} news.
+              </p>
+              <button type="button" className="btn btn-primary" onClick={this.onToggleClick}>{this.state.sortBy === 'popularity' ? 'View most recent' : 'View trending'}
+              </button>
+            </div>
+            <div className="refresh">
+              <button
+                type="button"
+                className="btn btn-primary btn-refresh"
+                onClick={this.onRefreshClick}
+              >Refresh
+              </button>
+            </div>
+
             <Topics
               className="topics"
               topics={this.state.topics}
@@ -159,11 +167,19 @@ class Home extends React.Component {
               selectedSources={this.state.selectedSources}
               onRemoval={this.onRemoval}
             />
+            <button
+              id="savePreferences"
+              className="btn btn-primary"
+              onClick={this.setPreferences}
+            >
+              Save Preferences
+            </button>
           </div>
 
           <div className="articlesContainer">
             <NewsList newsArticles={this.state.articles} favorites={this.state.favorites} />
           </div>
+
         </div>
       </div>
     );

@@ -2,6 +2,7 @@ import React from 'react';
 
 const Login = () => (
   <div className="login-page">
+    <img src="https://i.imgur.com/mCSoavu.png" alt="news stand" className="logo" />
     <div className="form">
       <div className="login-form">
         <a href="/auth/google">

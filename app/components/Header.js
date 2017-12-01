@@ -1,48 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import _ from 'underscore';
 
-const Header = props => (
-  <div className="header">
-    <form>
-      <img src="https://i.imgur.com/mCSoavu.png" alt="news stand" className="logo" />
+const Header = (props) => {
+  const loginLink = <Link to="/login">Login</Link>;
+  const logoutLink = <a href="/auth/logout">Logout</a>;
 
-      <div className="viewing">
-        <p> Viewing {props.sortBy === 'popularity' ? 'most popular' : 'most recent'} news.</p>
-
-        <button type="button" className="btn btn-primary" onClick={props.onToggleClick}>{props.sortBy === 'popularity' ? 'View most recent' : 'View trending'} </button>
-      </div>
-
-      <div className="divider"></div>
-
-      <div className="refresh">
-        <button
-          type="button"
-          className="btn btn-primary btn-refresh"
-          onClick={props.onRefreshClick}
-        >Refresh
-        </button>
-      </div>
-
-    </form>
-    <nav>
-      <div className="nav-bar">
-        <Link to="/profile">Profile</Link>
-      </div>
-      <div className="nav-bar">
-        <Link to="/login">Login</Link>
-      </div>
-      <div className="nav-bar">
-        <a href="/auth/logout">Logout</a>
-      </div>
-    </nav>
-  </div>
-);
-
-Header.propTypes = {
-  sortBy: PropTypes.string.isRequired,
-  onToggleClick: PropTypes.func.isRequired,
-  onRefreshClick: PropTypes.func.isRequired,
+  return (
+    <div className="header">
+      <div className="logo">
+        <Link to="/">
+          <img  className="logo-img" src="https://i.imgur.com/mCSoavu.png" alt="news stand" />
+        </Link>
+      </div>      
+      { _.isEmpty(props.user) ?
+        <div className="login-link">
+          {loginLink}
+        </div> :
+        <div className="user-stuff"> 
+          <div className="profile-pic-nav">
+            <Link to="/profile">
+              <img className="profile-pic-nav-img" src={props.user.profileImg} alt={props.user.username} />
+            </Link>
+          </div>
+          <div className="user-stuff-text">
+            <div className="user-stuff-name">
+              <p>Welcome, <Link to="/profile">
+                  {props.user.username}!
+                </Link>
+              </p>
+            </div>
+            <div className="logout-link">
+              {logoutLink}
+            </div>
+          </div> 
+        </div>
+      }
+      
+    </div>
+  );
 };
+
+// Header.propTypes = {
+//   // loggedIn: PropTypes.bool.isRequired,
+//   // user: PropTypes.shape({
+//   //   username: PropTypes.string.isRequired,
+//   //   topics: PropTypes.arrayOf(PropTypes.string),
+//   //   selectedSources: PropTypes.arrayOf(PropTypes.object),
+//   //   profileImg: PropTypes.string,
+//   // }),
+// };
 
 export default Header;

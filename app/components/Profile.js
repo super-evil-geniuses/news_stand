@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import Header from './Header';
 import NewsList from './NewsList';
 
 const capitalizeFirstLetter = (string) => {
@@ -37,6 +37,10 @@ class Profile extends React.Component {
   render() {
     return (
       <div id="profile">
+        <Header 
+          loggedIn={this.props.loggedIn} 
+          user={this.props.user}
+        />
         <div className="col-1-3">
 
           <div className="sidebar">
