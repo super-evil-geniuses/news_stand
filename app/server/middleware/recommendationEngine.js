@@ -125,10 +125,40 @@ const fullArt2 = {
   source: { name: 'CNN' }
 }
 
+const fullArt3 = { 
+  _id: '5a20c5250936ec7e4a19b6c3',
+  author: 'Bob Ortega, CNN',
+  title: 'No known evidence of assault in Border Patrol agent death, despite official statements',
+  description: 'Despite claims of murder by Texas governor Greg Abbott and others, the FBI still says what happened to two border agents on November 18 is a mystery.',
+  url: 'http://www.cnn.com/2017/11/30/us/no-known-evidence-assault-border-patrol-agent-death-invs/index.html',
+  urlToImage: 'http://cdn.cnn.com/cnnnext/dam/assets/171125150032-border-patrol-agent-funeral-rogelio-martinez-00000000-super-tease.jpg',
+  __v: 0,
+  favorites: 0,
+  comments: [],
+  body: 
+  [ 'Van Horn, Texas (CNN)Less than a day after a Border Patrol agent died and another was badly injured in a November 18 incident in West Texas, President Donald Trump tweeted that "We will seek out and bring to justice those responsible. We will, and must, build the Wall!"',
+    'The next day, Texas Gov. Greg Abbott offered a $20,000 reward for information in "this murder of" Border Patrol Agent Rogelio "Roger" Martinez, 36. "Help us catch this killer," he wrote on Twitter.',
+    'But ten days into the FBI\'s investigation, facts to back up claims of an assault by a unknown assailant remain thin. Department of Homeland Security Acting Secretary Elaine Duke said Thursday that the circumstances around the death of Martinez remain a mystery.',
+    'The FBI has released no information to support the idea that Martinez was murdered, or that he and the surviving agent were attacked. (CNN has confirmed the identity of the second agent, but Customs and Border Protection requested that he not be named, citing "security concerns.") A person familiar with the investigation said that as of late Tuesday the agency had not ruled out any possibilities.',
+    'That includes the possibility that the two men simply fell into a concrete-lined culvert adjacent to Interstate 10, about 12 miles east of their base in the small town of Van Horn. That is the area where they were found about 11:20 p.m. on that dark night, several hours after the moon had set. Martinez was alive, but had traumatic head injuries and broken bones. The other agent had a contusion to the back of his head requiring stitches, among other injuries, according to local Border Patrol union representative Lee Smith. Both men were taken first to a hospital in Van Horn, then airlifted to a trauma center in El Paso. Martinez died on November 19; the second agent was released from the hospital on November 22, walking with the help of a cane.',
+    'On November 21, the FBI\'s Special Agent in Charge of the El Paso Division, Emmerson Buie Jr., said at a press conference that the FBI was investigating the incident as "a potential assault of a federal officer." The bureau announced a $25,000 reward for information leading to the arrest of anyone involved.',
+    'FBI spokeswoman Jeanette Harper said Wednesday that the bureau is investigating "a few responses to the combined reward of $45,000." But she said the FBI had no further information to share.',
+    '"We\'re in fact-finding mode. We\'re trying to answer all those questions everybody has," she said.',
+    'Gov. Abbott\'s office said the reward offer had resulted in tips which were passed along to the FBI. They had not responded as of late Thursday to repeated queries about what led Abbott to describe the incident as a murder.',
+    'Late Thursday, the FBI announced a digital billboard campaign covering areas near the southwest border, from Arizona to Texas, seeking information from anyone who drove through Van Horn between 10 p.m. and midnight on November 18. The campaign highlights the $45,000 in reward money available for information that helps resolve how Martinez died and the second agent was injured.',
+    'In the meantime, friends and family have little to go on.',
+    '"They haven\'t told us anything more about what happened," said Elvia Martinez, the mother of Roger Martinez, at her home in El Paso on Tuesday.',
+    '"It does look weird" that there\'s so little information, said Israel Velasquez, a close friend of Martinez who flew in from Cincinnati to serve as a pallbearer at his funeral. "And what I\'ve heard is weird," he added, declining to elaborate.',
+    'Chris Cabrera, a spokesman for the National Border Patrol Council, the agents\' union, was one early voice just after the incident calling it "a brutal attack." "This was something well-thought out and planned," he said.',
+    'Cabrera said Tuesday evening that he remained convinced the agents were ambushed, based on his experience as an agent, on evidence he said he wasn\'t at liberty to discuss, and on that $25,000 FBI reward. If it had merely been a fall, he said, surely the FBI could have confirmed that within a week and a half.',
+    '"It bugs me they say they\'re investigating this as a potential assault," he said. "If someone dies, shouldn\'t it be a homicide? I hope they can get moving on this thing. A lot of agents want answers."'],
+  source: { name: 'CNN' }
+}
+
 const articles = [art1, art4, art5, art6];
 const liked = [art2, art3];
 
-const fullArticles = [fullArt1, fullArt2];
+const fullArticles = [fullArt1, fullArt2, fullArt3];
 
 createEdge = (article1, article2) => {
   if (!article1.edges[article2._id]) {
@@ -169,6 +199,7 @@ Promise.all(addedEdges)
       createEdge(articleObjArr[i], articleObjArr[j]);
     }
   }
+  console.log(createRecommendedList([articleObjArr[0]]));
 });
 
 createRecommendedList = (favArray) => {
@@ -185,6 +216,15 @@ createRecommendedList = (favArray) => {
     });
     recommendedEdges[article._id] = 'favorite';
   });
+  Object.keys(recommendedEdges).forEach((articleId) => {
+    if(recommendedEdges[articleId] !== 'favorite') {
+      reccommendedList.push(recommendedEdges[articleId]);
+    }
+  });
+  return reccommendedList.sort((a,b) => {
+    return b.proximity - a.proximity;
+  });
+};
 
 
 
