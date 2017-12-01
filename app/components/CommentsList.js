@@ -18,6 +18,14 @@ class CommentsList extends React.Component {
     this.toggleCommentView = this.toggleCommentView.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps !== this.props) {
+      this.setState({
+        comments: nextProps.article.comments,
+      });
+    }
+  }
+
   handleCommentSubmit(e) {
     // send post request to add comment to db
     e.preventDefault();

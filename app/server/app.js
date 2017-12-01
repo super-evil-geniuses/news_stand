@@ -47,9 +47,9 @@ app.get('/articles', searchArticles, scraper, (request, response) => {
   response.json(articles);
 });
 
-app.get('/article/:id', findArticle, (request, response) => {
-  const { article } = request;
-  response.json(article);
+app.get('/article/:id', getFavorites, findArticle, (request, response) => {
+  const { article, favorited } = request;
+  response.json({ article, favorited });
 });
 
 app.get('/sources', getSources, (request, response) => {
