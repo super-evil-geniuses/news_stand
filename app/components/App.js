@@ -38,14 +38,6 @@ class App extends React.Component {
       });
   }
 
-// this.state.loggedIn ? (
-//               <Profile 
-//                 user={this.state.user}
-//                 loggedIn={this.state.loggedIn}
-//               />
-//             ) : (
-//               <Redirect to="/" />
-//               )
   render() {
     return (
       <Router>
