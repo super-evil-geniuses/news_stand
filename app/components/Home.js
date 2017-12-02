@@ -8,6 +8,7 @@ import Loader from './Loader';
 import NewsList from './NewsList';
 import Header from './Header';
 import getSources from './helpers/getSources';
+import RecommendedList from './RecommendedList';
 
 class Home extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class Home extends React.Component {
     this.state = {
       sortBy: 'publishedAt',
       loading: false,
+      recommendedArticles: [],
       articles: [],
       sources: { 
         'techcrunch': {
@@ -52,6 +54,7 @@ class Home extends React.Component {
     this.onRemoval = this.onRemoval.bind(this);
     this.onTopicSearch = this.onTopicSearch.bind(this);
     this.setPreferences = this.setPreferences.bind(this);
+    this.getRecommended = this.getRecommended.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +66,7 @@ class Home extends React.Component {
     this.props.getPreferences(options, (articlesAndPreferences) => {
       if (articlesAndPreferences.data.preferences) {
         // if user is logged in
+        this.getRecommended();
         let sources = this.state.sources;
         let savedSources = articlesAndPreferences.data.preferences.sources;
         for (const source in sources) {
@@ -82,6 +86,15 @@ class Home extends React.Component {
       this.setState({ articles: articlesAndPreferences.data.articles });
     });
   }
+
+  getRecommended() {
+    axios.get('/recommended')
+      .then((articles) => {
+        this.setState({
+          recommendedArticles: articles.data
+        });
+      });
+  };
 
   parseSources() {
     let { sources } = this.state;
@@ -231,8 +244,11 @@ class Home extends React.Component {
           </div>
 
           <div className="articlesContainer">
+            {this.state.recommendedArticles.length > 0 && <RecommendedList articles={this.state.recommendedArticles}/>}
             {this.toggleArticles()}
+            
           </div>
+          
 
         </div>
       </div>
