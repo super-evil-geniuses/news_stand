@@ -421,3 +421,9 @@ textarea {
   background-color: #3f51b5;
   float: right;
 }
+
+.full-article {
+  width: 70%;
+  margin-left: 15%;
+  margin-top: 70px;
+}
