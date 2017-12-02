@@ -61,7 +61,7 @@ const comedyMap = {
   personal: 'sexual',
   spokesperson: 'royal-midget',
   person: 'tiny horse',
-  people: 'angry two year olds',
+  people: 'miniature donkeys',
   americans: 'Dungeons and Dragons players',
   american: 'stupid',
   america: "Westeros",
