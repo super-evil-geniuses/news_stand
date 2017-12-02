@@ -71,9 +71,7 @@ class Profile extends React.Component {
             <div className="fav-article-header">
               <h4>Favorited Articles</h4>
             </div>
-            
               <NewsList newsArticles={this.state.articles} favorites={this.state.articles} />
-            
           </div>
         </div>
 
