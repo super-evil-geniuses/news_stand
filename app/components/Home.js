@@ -15,7 +15,7 @@ class Home extends React.Component {
       sortBy: 'publishedAt',
       articles: [],
       sources: { 
-        techCrunch: {
+        techcrunch: {
           label: 'TechCrunch',
           id: 'techcrunch',
           selected: false,
@@ -30,12 +30,12 @@ class Home extends React.Component {
           id: 'bloomberg',
           selected: false,
         },
-        abc: {
+        'abc-news': {
           label: 'ABC News',
           id: 'abc-news',
           selected: false,
         },
-        associatedPress: {
+        'associated-press': {
           label: 'Associated Press',
           id: 'associated-press',
           selected: false,
