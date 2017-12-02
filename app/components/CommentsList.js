@@ -20,7 +20,7 @@ class CommentsList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps !== this.props) {
+    if (nextProps !== this.props && nextProps.article.comments) {
       this.setState({
         comments: nextProps.article.comments,
       });

@@ -59,10 +59,6 @@ class Home extends React.Component {
       topics, sources, sortBy,
     };
 
-    getSources((sources) => {
-
-    })
-
     this.props.getPreferences(options, (articlesAndPreferences) => {
       if (articlesAndPreferences.data.preferences) {
         // if user is logged in
