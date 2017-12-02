@@ -25,12 +25,12 @@ const Share = ({article}) => {
               round />
       </FacebookShareButton>
       <LinkedinShareButton url={article.url}>
-        <TwitterIcon
+        <LinkedinIcon
               size={32}
               round />
       </LinkedinShareButton>
       <TwitterShareButton url={article.url}>
-        <LinkedinIcon
+        <TwitterIcon
               size={32}
               round />
       </TwitterShareButton>
