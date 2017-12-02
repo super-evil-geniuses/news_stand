@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import comedyParser from './helpers/comedyParser';
 import defaultImage from '../public/assets/defaultImage';
 import FavoriteButton from './FavoriteButton';
 import CommentsList from './CommentsList';
@@ -12,8 +13,10 @@ class FullArticle extends React.Component {
     this.state = {
       article: 'newspaper',
       favorited: false,
+      funny: false,
     };
     this.onAddFavorite = this.onAddFavorite.bind(this);
+    this.makeFunny = this.makeFunny.bind(this);
   }
 
   componentDidMount() {
@@ -46,10 +49,22 @@ class FullArticle extends React.Component {
       });
   }
 
+  makeFunny() {
+    this.setState({
+      funny: !this.state.funny
+    });
+  }
+
   render() {
     let articleBodyParagraphs;
+    let articleTitle = this.state.article.title;    
     if (this.state.article.body && this.state.article.body.length > 0) {
-      articleBodyParagraphs = this.state.article.body.map((paragraph, idx) =>
+      let bodyArray = this.state.article.body;
+      if(this.state.funny) {
+        bodyArray = comedyParser(this.state.article.body);
+        articleTitle = comedyParser([this.state.article.title]);
+      }
+      articleBodyParagraphs = bodyArray.map((paragraph, idx) =>
         <p key={idx}>{paragraph}</p>
       )
     }
@@ -65,6 +80,7 @@ class FullArticle extends React.Component {
         :
           <img src={defaultImage} className="defaultImg" alt="#" />        
       }
+      <button className='btn-funny' onClick={() => this.makeFunny()}>{this.state.funny ? 'Make serious' : 'Make funny'}</button>
       <FavoriteButton
         article={this.state.article}
         onAddFavorite={this.onAddFavorite}
@@ -72,7 +88,7 @@ class FullArticle extends React.Component {
       />
       {
         this.state.article.title ?
-          <h3 className="articleTitle"> {this.state.article.title} </h3>
+          <h3 className="articleTitle"> {articleTitle} </h3>
         :
         null
       }
