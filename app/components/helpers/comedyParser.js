@@ -83,8 +83,8 @@ const comedyMap = {
   republicans: 'child molesters',
   democrats: 'incest-lovers',
   bank: 'waffle house',
-  'donald trump': 'a racist ass-hat',
-  trump: 'the ass-hat',
+  'donald trump': 'Captain Buttface',
+  trump: 'Captain Buttface',
   'the white house': "Toby's living room",
   muslim: 'vegan',
   'sexual misconduct': 'pant-pooping',
@@ -100,5 +100,6 @@ const comedyParser = (bodyArray) => {
     });
   });
 };
+
 
 export default comedyParser;

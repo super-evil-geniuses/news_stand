@@ -16,6 +16,7 @@ class FullArticle extends React.Component {
       funny: false,
     };
     this.onAddFavorite = this.onAddFavorite.bind(this);
+    this.makeFunny = this.makeFunny.bind(this);
   }
 
   componentDidMount() {
@@ -48,12 +49,20 @@ class FullArticle extends React.Component {
       });
   }
 
+  makeFunny() {
+    this.setState({
+      funny: !this.state.funny
+    });
+  }
+
   render() {
     let articleBodyParagraphs;
+    let articleTitle = this.state.article.title;    
     if (this.state.article.body && this.state.article.body.length > 0) {
-      let bodyArray = this.state.article.body
+      let bodyArray = this.state.article.body;
       if(this.state.funny) {
         bodyArray = comedyParser(this.state.article.body);
+        articleTitle = comedyParser([this.state.article.title]);
       }
       articleBodyParagraphs = bodyArray.map((paragraph, idx) =>
         <p key={idx}>{paragraph}</p>
@@ -71,6 +80,7 @@ class FullArticle extends React.Component {
         :
           <img src={defaultImage} className="defaultImg" alt="#" />        
       }
+      <button className='btn-funny' onClick={() => this.makeFunny()}>{this.state.funny ? 'Make serious' : 'Make funny'}</button>
       <FavoriteButton
         article={this.state.article}
         onAddFavorite={this.onAddFavorite}
@@ -78,7 +88,7 @@ class FullArticle extends React.Component {
       />
       {
         this.state.article.title ?
-          <h3 className="articleTitle"> {this.state.article.title} </h3>
+          <h3 className="articleTitle"> {articleTitle} </h3>
         :
         null
       }

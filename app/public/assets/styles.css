@@ -433,3 +433,9 @@ textarea {
   width: 20px;
   margin-right: 10px;
 }
+
+.btn-funny {
+  color: white;
+  background-color: #3f51b5;
+  float: right;
+}
