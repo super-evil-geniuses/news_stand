@@ -32,7 +32,10 @@ const searchArticles = (request, response, next) => {
   } else if (!sources && !topics) {
     url += '&sources=techcrunch';
   }
-
+  if (!sources) {
+    next()
+    return;
+  }
   // Request information from newsAPI`
   console.log(url);
   axios
