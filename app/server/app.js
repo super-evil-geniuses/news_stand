@@ -62,7 +62,8 @@ app.get('/preferences', getPreferences, searchArticles, scraper, getFavorites, (
 });
 
 app.post('/preferences', setPreferences, (request, response) => {
-  response.end('Posted successfully');
+  // console.log('ABOUT TO SEND', request.updatedUser)
+  response.send(request.updatedUser);
 });
 
 app.post('/favorites', addFavorite, (request, response) => {

@@ -19,6 +19,11 @@ class App extends React.Component {
       user: {},
     };
   }
+  
+  updateUser (newUser) {
+    this.setState({ user: newUser});
+    console.log(this.state.user);
+  }
 
   componentDidMount() {
     axios.get('/auth')
@@ -47,6 +52,7 @@ class App extends React.Component {
                 getPreferences={getPreferences}
                 loggedIn={this.state.loggedIn}
                 user={this.state.user}
+                updateUser={this.updateUser.bind(this)}
               />
             }
           />

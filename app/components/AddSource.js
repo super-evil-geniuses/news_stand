@@ -123,7 +123,7 @@ class AddSource extends React.Component {
     super(props);
     this.state = {
       value: '',
-      suggestions: [],
+      suggestions: ['CNN'],
       selected: {},
     };
 
@@ -176,40 +176,41 @@ class AddSource extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div className="addSourceContainer" id="add-source-container">
-        <form onSubmit={(event) => { this.handleClick(event); }}>
-          <button
-            className="add btn add-remove-btn"
-            onClick={(event) => { this.handleClick(event); }}
-          >
-            +
-          </button>
-          <div id="add-input-container">
-            <Autosuggest
-              theme={{
-                container: classes.container,
-                suggestionsContainerOpen: classes.suggestionsContainerOpen,
-                suggestionsList: classes.suggestionsList,
-                suggestion: classes.suggestion,
-              }}
-              renderInputComponent={renderInput}
-              suggestions={this.state.suggestions}
-              onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
-              onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
-              renderSuggestionsContainer={renderSuggestionsContainer}
-              getSuggestionValue={getSuggestionValue}
-              renderSuggestion={renderSuggestion}
-              inputProps={{
-                autoFocus: true,
-                classes,
-                placeholder: 'Search a news source',
-                value: this.state.value,
-                onChange: this.handleChange,
-              }}
-            />
-          </div>
-        </form>
-      </div>
+      // <div className="addSourceContainer" id="add-source-container">
+      //   <form onSubmit={(event) => { this.handleClick(event); }}>
+      //     <button
+      //       className="add btn add-remove-btn"
+      //       onClick={(event) => { this.handleClick(event); }}
+      //     >
+      //       +
+      //     </button>
+      //     <div id="add-input-container">
+      //       <Autosuggest
+      //         theme={{
+      //           container: classes.container,
+      //           suggestionsContainerOpen: classes.suggestionsContainerOpen,
+      //           suggestionsList: classes.suggestionsList,
+      //           suggestion: classes.suggestion,
+      //         }}
+      //         renderInputComponent={renderInput}
+      //         suggestions={this.state.suggestions}
+      //         onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
+      //         onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
+      //         renderSuggestionsContainer={renderSuggestionsContainer}
+      //         getSuggestionValue={getSuggestionValue}
+      //         renderSuggestion={renderSuggestion}
+      //         inputProps={{
+      //           autoFocus: true,
+      //           classes,
+      //           placeholder: 'Search a news source',
+      //           value: this.state.value,
+      //           onChange: this.handleChange,
+      //         }}
+      //       />
+      //     </div>
+      //   </form>
+      // </div>
+      <div></div>
     );
   }
 }

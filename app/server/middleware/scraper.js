@@ -62,6 +62,7 @@ const abcScrape = (article) => {
 
   if (article.title.includes('WATCH')) {
     resolve(null);
+    return;
   }
   Article.find({ url: article.url})
   .then((res) => {

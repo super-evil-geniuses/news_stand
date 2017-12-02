@@ -3,7 +3,6 @@ import PropsTypes from 'prop-types';
 import axios from 'axios';
 
 import Topics from './Topics';
-import AddSource from './AddSource';
 import SelectedSources from './SelectedSources';
 import NewsList from './NewsList';
 import Header from './Header';
@@ -15,74 +14,124 @@ class Home extends React.Component {
     this.state = {
       sortBy: 'publishedAt',
       articles: [],
-      selectedSources: [{
-        label: 'TechCrunch',
-        id: 'techcrunch',
-      }],
+      sources: { 
+        techCrunch: {
+          label: 'TechCrunch',
+          id: 'techcrunch',
+          selected: false,
+        },
+        cnn: {
+          label: 'CNN',
+          id: 'cnn',
+          selected: false,
+        },
+        bloomberg: {
+          label: 'Bloomberg',
+          id: 'bloomberg',
+          selected: false,
+        },
+        abc: {
+          label: 'ABC News',
+          id: 'abc-news',
+          selected: false,
+        },
+        associatedPress: {
+          label: 'Associated Press',
+          id: 'associated-press',
+          selected: false,
+        },
+    },
       topics: ['net neutrality'],
       favorites: [],
     };
 
     this.onRefreshClick = this.onRefreshClick.bind(this);
     this.onToggleClick = this.onToggleClick.bind(this);
-    this.onAddSource = this.onAddSource.bind(this);
     this.onRemoval = this.onRemoval.bind(this);
     this.onTopicSearch = this.onTopicSearch.bind(this);
     this.setPreferences = this.setPreferences.bind(this);
   }
 
   componentDidMount() {
-    const { topics, selectedSources, sortBy } = this.state;
+    const { topics, sortBy } = this.state;
+    const sources = this.parseSources();
     const options = {
-      topics, selectedSources, sortBy,
+      topics, sources, sortBy,
     };
+
+    getSources((sources) => {
+
+    })
+
     this.props.getPreferences(options, (articlesAndPreferences) => {
       if (articlesAndPreferences.data.preferences) {
         // if user is logged in
+        let sources = this.state.sources;
+        let savedSources = articlesAndPreferences.data.preferences.sources;
+        for (const source in sources) {
+          sources[source].selected = false;
+          for (let i = 0; i < savedSources.length; i++) {
+            if (savedSources[i].id === sources[source].id) {
+              sources[source].selected = true;
+            }
+          }
+        }
         this.setState({
           topics: articlesAndPreferences.data.preferences.topics,
-          selectedSources: articlesAndPreferences.data.preferences.selectedSources,
           favorites: articlesAndPreferences.data.favorites,
+          sources: sources,
         });
       }
       this.setState({ articles: articlesAndPreferences.data.articles });
     });
   }
 
+  parseSources() {
+    let { sources } = this.state;
+    let arr = [];
+    for (const source in sources) {
+      if (sources[source].selected) {
+        arr.push({label: sources[source].label, id: sources[source].id})
+      }
+    }
+    return arr;
+  }
+
+  onSourceClick(sourceId, val) {
+    let oldState = this.state.sources;
+    oldState[sourceId].selected = val;
+    this.setState({ sources: oldState}, (data) => {
+      this.onRefreshClick();
+      if (this.props.loggedIn) {
+        this.setPreferences()
+      }
+    })
+  }
+
   onRefreshClick() {
-    const { topics, selectedSources, sortBy } = this.state;
+    const { topics, sortBy } = this.state;
+    const sources = this.parseSources();
     const options = {
-      topics, selectedSources, sortBy,
+      topics, sources, sortBy,
     };
     this.getArticles(options);
   }
 
   onToggleClick() {
     this.setState({ sortBy: this.state.sortBy === 'popularity' ? 'publishedAt' : 'popularity' }, () => {
-      const { topics, selectedSources, sortBy } = this.state;
+      const { topics, sortBy } = this.state;
+      const sources = this.parseSources();
       const options = {
-        topics, selectedSources, sortBy,
+        topics, sources, sortBy,
       };
       this.getArticles(options);
     });
   }
 
-  onAddSource(source) {
-    const sources = this.state.selectedSources;
-    sources.push(source);
-    this.setState({ selectedSources: sources });
-
-    const { topics, sortBy } = this.state;
-    const options = {
-      topics,
-      selectedSources: sources,
-      sortBy,
-    };
-    this.getArticles(options);
-  }
-
+//can be reformatted to only work for topics
   onRemoval(index, type) {
-    const { topics, selectedSources, sortBy } = this.state;
+    const { topics, sortBy } = this.state;
+    const sources = this.parseSources();
 
     if (type === 'topics') {
       topics.splice(index, 1);
@@ -93,28 +142,33 @@ class Home extends React.Component {
     }
 
     const options = {
-      topics, selectedSources, sortBy,
+      topics, sources, sortBy,
     };
-
+    this.setPreferences();
     this.getArticles(options);
   }
 
   onTopicSearch(topic) {
-    const { topics, selectedSources, sortBy } = this.state;
+    const { topics, sortBy } = this.state;
     topics.push(topic);
     this.setState({ topics });
+    const sources = this.parseSources();
 
     const options = {
-      topics, selectedSources, sortBy,
+      topics, sources, sortBy,
     };
+    console.log(options);
+    this.setPreferences();
     this.getArticles(options);
   }
 
   setPreferences() {
-    const { topics, selectedSources } = this.state;
+    const { topics } = this.state;
+    const sources = this.parseSources();
 
-    axios.post('/preferences', { topics, selectedSources })
+    axios.post('/preferences', { topics, sources })
       .then((message) => {
+        this.props.updateUser(message.data)
         console.log(message);
       })
       .catch(() => {
@@ -154,7 +208,6 @@ class Home extends React.Component {
               >Refresh
               </button>
             </div>
-
             <Topics
               className="topics"
               topics={this.state.topics}
@@ -162,10 +215,9 @@ class Home extends React.Component {
               onRemoval={this.onRemoval}
             />
 
-            <AddSource onAddSource={this.onAddSource} getSources={getSources} />
             <SelectedSources
-              selectedSources={this.state.selectedSources}
-              onRemoval={this.onRemoval}
+              onSourceClick={this.onSourceClick.bind(this)}
+              sources={this.state.sources}
             />
             <button
               id="savePreferences"
