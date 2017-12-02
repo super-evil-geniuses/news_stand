@@ -69,48 +69,48 @@ class FullArticle extends React.Component {
       )
     }
     return (
-      <div className="full-article">
-        <Header 
+      <div className="full-article-page">
+        <Header
           loggedIn={this.props.loggedIn} 
           user={this.props.user}
-        />        
-      {
-        this.state.article.urlToImage ?
-          <img src={this.state.article.urlToImage} className="articleImg" alt="#" />
-        :
-          <img src={defaultImage} className="defaultImg" alt="#" />        
-      }
-      <button className='btn-funny' onClick={() => this.makeFunny()}>{this.state.funny ? 'Make serious' : 'Make funny'}</button>
-      <FavoriteButton
-        article={this.state.article}
-        onAddFavorite={this.onAddFavorite}
-        favorited={this.state.favorited}
-      />
-      {
-        this.state.article.title ?
-          <h3 className="articleTitle"> {articleTitle} </h3>
-        :
-        null
-      }
-      {
-        this.state.article.body ?
-          <div className="articleDescription">{articleBodyParagraphs}</div> :
-          <div className="articleDescription">{this.state.article.description}</div> 
-      }
+        />
+        <div className="full-article">
+          {
+            this.state.article.urlToImage ?
+              <img src={this.state.article.urlToImage} className="articleImg" alt="#" />
+            :
+              <img src={defaultImage} className="defaultImg" alt="#" />        
+          }
+          <button className='btn-funny' onClick={() => this.makeFunny()}>{this.state.funny ? 'Make serious' : 'Make funny'}</button>
+          <FavoriteButton
+            article={this.state.article}
+            onAddFavorite={this.onAddFavorite}
+            favorited={this.state.favorited}
+          />
+          {
+            this.state.article.title ?
+              <h3 className="articleTitle"> {articleTitle} </h3>
+            :
+            null
+          }
+          {
+            this.state.article.body ?
+              <div className="articleDescription">{articleBodyParagraphs}</div> :
+              <div className="articleDescription">{this.state.article.description}</div> 
+          }
 
-      {
-        this.state.article.source ?
-          <div className="articleSource">{this.state.article.source.name} {this.state.article.author ?
-            <p className="articleAuthor">| {this.state.article.author}</p> :
-            null}
-          </div> :
-          null
-        }
- 
+          {
+            this.state.article.source ?
+              <div className="articleSource">{this.state.article.source.name} {this.state.article.author ?
+                <p className="articleAuthor">| {this.state.article.author}</p> :
+                null}
+              </div> :
+              null
+          }
 
-        <CommentsList article={this.state.article} />
-
-      </div> 
+          <CommentsList article={this.state.article} />
+        </div>
+      </div>
     );
   }
 }
