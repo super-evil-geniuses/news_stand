@@ -6,6 +6,7 @@ import defaultImage from '../public/assets/defaultImage';
 import FavoriteButton from './FavoriteButton';
 import CommentsList from './CommentsList';
 import Header from './Header';
+import Share from './Share';
 
 class FullArticle extends React.Component {
   constructor(props) {
@@ -82,6 +83,7 @@ class FullArticle extends React.Component {
               <img src={defaultImage} className="defaultImg" alt="#" />        
           }
           <button className='btn-funny' onClick={() => this.makeFunny()}>{this.state.funny ? 'Make serious' : 'Make funny'}</button>
+          <Share article={this.state.article} />
           <FavoriteButton
             article={this.state.article}
             onAddFavorite={this.onAddFavorite}

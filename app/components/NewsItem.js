@@ -6,6 +6,7 @@ import defaultImage from '../public/assets/defaultImage';
 
 import FavoriteButton from './FavoriteButton';
 import CommentsList from './CommentsList';
+import Share from './Share';
 
 class NewsItem extends React.Component {
   constructor(props) {
@@ -54,6 +55,7 @@ class NewsItem extends React.Component {
               null
           }
         </Link>
+        <Share article={this.state.article} />
         <FavoriteButton
           article={this.state.article}
           favorited={this.state.favorited}
