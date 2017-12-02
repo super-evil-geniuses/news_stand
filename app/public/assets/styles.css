@@ -184,6 +184,23 @@
   color: red;
 }
 
+/* ------------ */
+/*    Share     */
+/* ------------ */
+
+.article-bottom-nav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.share-icons {
+  display: flex;
+  justify-content: flex-end;
+  padding-left: 20px;
+
+}
+
 /* ---------------------------- */
 /*    Material-UI Component     */
 /* ---------------------------- */

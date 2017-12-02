@@ -83,7 +83,6 @@ class FullArticle extends React.Component {
               <img src={defaultImage} className="defaultImg" alt="#" />        
           }
           <button className='btn-funny' onClick={() => this.makeFunny()}>{this.state.funny ? 'Make serious' : 'Make funny'}</button>
-          <Share article={this.state.article} />
           <FavoriteButton
             article={this.state.article}
             onAddFavorite={this.onAddFavorite}
@@ -110,7 +109,11 @@ class FullArticle extends React.Component {
               null
           }
 
-          <CommentsList article={this.state.article} />
+          <div className="article-bottom-nav">
+            <CommentsList article={this.state.article} />
+            <Share article={this.state.article} />
+          </div>
+        
         </div>
       </div>
     );
