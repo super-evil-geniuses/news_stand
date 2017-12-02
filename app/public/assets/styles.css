@@ -344,11 +344,9 @@
 }
 
 .fav-article-header {
-  position: inherit;
-  background-color: white;
-  padding-top: 10px;
-  top: 70px;
-  z-index: 15;
+  float: left;
+  width: 80%;
+  text-align: center;
 }
 
 /* ---------------------------- */
@@ -450,7 +448,7 @@ textarea {
 }
 
 .news-list {
-  float: right;
+  float: left;
   width: 80%;
 }
 
@@ -466,7 +464,7 @@ textarea {
 
 .recommended-list {
   width: 20%;
-  float: right;
+  float: left;
   padding-right: 30px;
   opacity: 1;
 }
