@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import Topics from './Topics';
 import SelectedSources from './SelectedSources';
+import Loader from './Loader';
 import NewsList from './NewsList';
 import Header from './Header';
 import getSources from './helpers/getSources';
@@ -13,6 +14,7 @@ class Home extends React.Component {
     super(props);
     this.state = {
       sortBy: 'publishedAt',
+      loading: false,
       articles: [],
       sources: { 
         'techcrunch': {
@@ -58,7 +60,6 @@ class Home extends React.Component {
     const options = {
       topics, sources, sortBy,
     };
-
     this.props.getPreferences(options, (articlesAndPreferences) => {
       if (articlesAndPreferences.data.preferences) {
         // if user is logged in
@@ -160,19 +161,32 @@ class Home extends React.Component {
   setPreferences() {
     const { topics } = this.state;
     const sources = this.parseSources();
+    this.setState({loading: true});
 
     axios.post('/preferences', { topics, sources })
       .then((message) => {
         this.props.updateUser(message.data)
+        this.setState({loading: false});
       })
       .catch(() => {
         console.log('There was an error saving user preferences');
       });
   }
 
+  toggleArticles() {
+    if (this.parseSources().length === 0) {
+      return <h3>Select a source to see the news</h3>
+    } else if (this.state.loading === true ) {
+      return <Loader />
+    } else {
+      return <NewsList newsArticles={this.state.articles} favorites={this.state.favorites} />;
+    }
+  }
+
   getArticles(options) {
+    this.setState({loading: true});
     this.props.search(options, (newsArticles) => {
-      this.setState({ articles: newsArticles });
+      this.setState({ articles: newsArticles, loading: false});
     });
   }
 
@@ -223,7 +237,7 @@ class Home extends React.Component {
           </div>
 
           <div className="articlesContainer">
-            <NewsList newsArticles={this.state.articles} favorites={this.state.favorites} />
+            {this.toggleArticles()}
           </div>
 
         </div>

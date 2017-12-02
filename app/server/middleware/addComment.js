@@ -17,7 +17,6 @@ const addComment = (request, response, next) => {
     Article.findOneAndUpdate(findCriteria, toUpdate, { new: true })
       .then((doc) => {
         request.article = doc;
-        console.log('response from database: ', doc);
       })
       .catch((err) => {
         console.log('Error adding comment to database: ', err);
