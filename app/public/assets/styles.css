@@ -197,13 +197,12 @@
 
 .article-bottom-nav {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
 }
 
 .share-icons {
   display: flex;
-  padding-left: 20px;
+  padding-bottom: 5px;
 
 }
 

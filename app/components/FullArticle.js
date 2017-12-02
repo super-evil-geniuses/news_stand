@@ -110,8 +110,8 @@ class FullArticle extends React.Component {
           }
 
           <div className="article-bottom-nav">
-            <CommentsList article={this.state.article} />
             <Share article={this.state.article} />
+            <CommentsList article={this.state.article} />
           </div>
         
         </div>
