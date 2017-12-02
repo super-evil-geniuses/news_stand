@@ -72,11 +72,8 @@
 /* ----------------- */
 
 .contentContainer {
-  top: 89px;
-  display: flex;
-  flex-direction: row;
-  justify-items: flex-start;
-  position: absolute;
+  width: 100%;
+  margin-top: 100px;
 }
 
 .topicsAndSourcesContainer {
@@ -91,9 +88,10 @@
 }
 
 .articlesContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  /* display: flex; */
+  /* flex-direction: column;
+  align-items: center; */
+  margin: 0 0 0 250px;
 }
 
 
@@ -107,9 +105,8 @@
 }
 
 .message {
-  margin-left: 600px;
-  margin-top: 100px;
   display: block;
+  text-align: center;
 }
 
 .favbtn {
@@ -123,8 +120,6 @@
 
 
 .newsList {
-/*  width: 50%;
-  margin: 0 auto;*/
   overflow-y: scroll; 
 }
 
@@ -134,7 +129,7 @@
 }
 
 .newsItem {
-  width: 50%;
+  width: 80%;
   margin: 30px auto;
 }
 .articleImg {
@@ -454,3 +449,28 @@ textarea {
   margin-left: 15%;
   margin-top: 70px;
 }
+
+.news-list {
+  float: right;
+  width: 80%;
+}
+
+.clearfix:after {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
+.sofie-app {
+  width: 100%;
+}
+
+.recommended-list {
+  width: 20%;
+  float: right;
+  padding-right: 30px;
+  opacity: 1;
+}
+
+
+

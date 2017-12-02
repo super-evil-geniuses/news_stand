@@ -17,7 +17,8 @@ import scraper from './middleware/scraper.js';
 import addComment from './middleware/addComment';
 import getFavorites from './middleware/getFavorites';
 import findArticle from './middleware/findArticle';
-
+import getAllArticles from './middleware/getAllArticles';
+import getRecommended from './middleware/recommendationEngine.js';
 
 const app = express();
 const publicPath = express.static(path.join(__dirname, '../'));
@@ -62,9 +63,9 @@ app.get('/preferences', getPreferences, searchArticles, scraper, getFavorites, (
   response.json({ articles, preferences, favorites });
 });
 
-// app.get('/recommended', /* find recommended list */ (request, response) => {
-//   response.json(request.recommended);
-// });
+app.get('/recommended', getFavorites, getAllArticles, getRecommended, (request, response) => {
+  response.json(request.recommendations);
+});
 
 app.post('/preferences', setPreferences, (request, response) => {
   // console.log('ABOUT TO SEND', request.updatedUser)
