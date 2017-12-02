@@ -55,7 +55,6 @@ class NewsItem extends React.Component {
               null
           }
         </Link>
-        <Share article={this.state.article} />
         <FavoriteButton
           article={this.state.article}
           favorited={this.state.favorited}
@@ -75,9 +74,10 @@ class NewsItem extends React.Component {
             </div> :
             null
         }
-
-        <CommentsList article={this.state.article} />
-
+        <div className="article-bottom-nav">
+          <CommentsList article={this.state.article} />
+          <Share article={this.state.article} />
+        </div>
         <br />
       </div>
     );
