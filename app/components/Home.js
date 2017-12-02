@@ -228,13 +228,6 @@ class Home extends React.Component {
               onSourceClick={this.onSourceClick.bind(this)}
               sources={this.state.sources}
             />
-            <button
-              id="savePreferences"
-              className="btn btn-primary"
-              onClick={this.setPreferences}
-            >
-              Save Preferences
-            </button>
           </div>
 
           <div className="articlesContainer">
