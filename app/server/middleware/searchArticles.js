@@ -33,6 +33,7 @@ const searchArticles = (request, response, next) => {
     url += '&sources=techcrunch';
   }
   if (!sources) {
+    request.articles = [];
     next()
     return;
   }
