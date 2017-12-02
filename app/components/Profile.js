@@ -13,48 +13,64 @@ const capitalizeFirstLetter = (string) => {
 class Profile extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      username: this.props.user.username,
-      topics: this.props.user.topics,
-      selectedSources: this.props.user.selectedSources,
+      loggedIn: false,
+      user: {
+        username: 'News Stand',
+        topics: [],
+        selectedSources: [],
+        profileImg: '',
+      },
       articles: [],
-      img: this.props.user.profileImg,
     };
-    this.firstName = this.state.username.split(' ')[0];
-    this.lastName = this.state.username.split(' ')[1];
   }
 
-  componentWillMount() {
-    axios.get('/favorites')
-      .then((response) => {
+  componentDidMount() {
+    axios.get('/auth')
+      .then((authStatus) => {
         this.setState({
-          articles: response.data.favorites,
+          loggedIn: authStatus.data.loggedIn,
+          user: authStatus.data.user,
         });
+      })
+      .catch((err) => {
+        throw err;
       });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { user } = this.state;
+    if (user !== prevState.user) {
+      axios.get('/favorites')
+        .then((response) => {
+          this.setState({
+            articles: response.data.favorites,
+          });
+        });
+    }
   }
 
   render() {
     return (
       <div className="profile-container">
         <Header 
-          loggedIn={this.props.loggedIn} 
-          user={this.props.user}
+          loggedIn={this.state.loggedIn}
+          user={this.state.user}
         />
         <div className="contentContainer">
           <div className="topicsAndSourcesContainer">
             <div className="profile-pg-user">
               <div>
-                <img className="profile-pg-profile-img" src={this.props.user.profileImg} alt={this.props.user.username} />
+                <img className="profile-pg-profile-img" src={this.state.user.profileImg} alt={this.state.user.username} />
               </div>
               <div className="profile-pg-username">
-                {this.props.user.username}
+                {this.state.user.username}
               </div>
             </div>
             <div className="saved-preferences">
               <div className="saved-topics">
                 <h4>Saved Topics</h4>
-                  {this.props.user.topics.map(topicString => (
+                  {this.state.user.topics.map(topicString => (
                     <li key={topicString}>
                       {capitalizeFirstLetter(topicString)}
                     </li>
@@ -62,7 +78,7 @@ class Profile extends React.Component {
               </div>
               <div className="saved-sources">
                 <h4>Saved Sources</h4>
-                  {this.props.user.selectedSources.map(sourceObj =>
+                  {this.state.user.selectedSources.map(sourceObj =>
                     <li key={sourceObj.label} >{capitalizeFirstLetter(sourceObj.label)}</li>)}
               </div>
             </div>

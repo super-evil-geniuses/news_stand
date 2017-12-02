@@ -38,7 +38,14 @@ class App extends React.Component {
       });
   }
 
-
+// this.state.loggedIn ? (
+//               <Profile 
+//                 user={this.state.user}
+//                 loggedIn={this.state.loggedIn}
+//               />
+//             ) : (
+//               <Redirect to="/" />
+//               )
   render() {
     return (
       <Router>
@@ -63,15 +70,11 @@ class App extends React.Component {
           <Route
             path="/profile"
             render={() => (
-            this.state.loggedIn ? (
               <Profile 
                 user={this.state.user}
                 loggedIn={this.state.loggedIn}
               />
-            ) : (
-              <Redirect to="/" />
-              )
-          )}
+            )}
           />
           <Route
             path="/articles/:id"
