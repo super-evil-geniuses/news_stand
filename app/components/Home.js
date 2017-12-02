@@ -244,8 +244,8 @@ class Home extends React.Component {
           </div>
 
           <div className="articlesContainer">
-            <RecommendedList articles={this.state.recommendedArticles}/>
             {this.toggleArticles()}
+            <RecommendedList articles={this.state.recommendedArticles}/>
             
           </div>
           
