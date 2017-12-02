@@ -19,6 +19,7 @@ class FullArticle extends React.Component {
   componentDidMount() {
     axios.get('/article/'+this.props.match.params.id)
       .then((response) => {
+        console.log(response);
         this.setState({
           article: response.data.article,
           favorited: response.data.favorited,
