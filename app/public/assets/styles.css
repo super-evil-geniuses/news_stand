@@ -108,6 +108,7 @@
 
 .message {
   margin-left: 600px;
+  margin-top: 100px;
   display: block;
 }
 
@@ -349,9 +350,8 @@
 }
 
 .fav-article-header {
-  position: fixed;
+  position: inherit;
   background-color: white;
-  min-width: 50%;
   padding-top: 10px;
   top: 70px;
   z-index: 15;
@@ -363,6 +363,10 @@
 
 textarea {
   resize: none;
+}
+
+.CommentComponent {
+  width: 100%;
 }
 
 .Comment {

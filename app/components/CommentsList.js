@@ -95,7 +95,7 @@ class CommentsList extends React.Component {
       );
     }
     return (
-      <div>
+      <div className="CommentComponent">
         <Button raised color="primary" id="showComments" onClick={this.toggleCommentView}>
           <img className="commentImg" src="https://image.flaticon.com/icons/svg/54/54761.svg" alt="#" />
           {this.state.comments.length} comment(s)
