@@ -105,6 +105,11 @@
   float: right;
 }
 
+.message {
+  margin-left: 600px;
+  display: block;
+}
+
 .favbtn {
   float: right;
   clear: both;

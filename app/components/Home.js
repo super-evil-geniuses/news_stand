@@ -98,9 +98,10 @@ class Home extends React.Component {
     let oldState = this.state.sources;
     oldState[sourceId].selected = val;
     this.setState({ sources: oldState}, (data) => {
-      this.onRefreshClick();
       if (this.props.loggedIn) {
         this.setPreferences()
+      } else {
+        this.onRefreshClick();
       }
     })
   }
@@ -159,23 +160,23 @@ class Home extends React.Component {
   }
 
   setPreferences() {
-    const { topics } = this.state;
+    const { topics, sortBy } = this.state;
     const sources = this.parseSources();
-    this.setState({loading: true});
+    this.setState({loading: true}, () => {
 
     axios.post('/preferences', { topics, sources })
       .then((message) => {
         this.props.updateUser(message.data)
-        this.setState({loading: false});
+        this.getArticles({ topics, sources, sortBy })
       })
       .catch(() => {
         console.log('There was an error saving user preferences');
-      });
+      })})
   }
 
   toggleArticles() {
     if (this.parseSources().length === 0) {
-      return <h3>Select a source to see the news</h3>
+      return <h3 className="message" >Select a source to see the news</h3>
     } else if (this.state.loading === true ) {
       return <Loader />
     } else {
@@ -186,7 +187,7 @@ class Home extends React.Component {
   getArticles(options) {
     this.setState({loading: true});
     this.props.search(options, (newsArticles) => {
-      this.setState({ articles: newsArticles, loading: false});
+      this.setState({ articles: newsArticles }, this.setState({loading: false}));
     });
   }
 
