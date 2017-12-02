@@ -15,27 +15,27 @@ class Home extends React.Component {
       sortBy: 'publishedAt',
       articles: [],
       sources: { 
-        techCrunch: {
+        'techcrunch': {
           label: 'TechCrunch',
           id: 'techcrunch',
           selected: false,
         },
-        cnn: {
+        'cnn': {
           label: 'CNN',
           id: 'cnn',
           selected: false,
         },
-        bloomberg: {
+        'bloomberg': {
           label: 'Bloomberg',
           id: 'bloomberg',
           selected: false,
         },
-        abc: {
+        'abc-news': {
           label: 'ABC News',
           id: 'abc-news',
           selected: false,
         },
-        associatedPress: {
+        'associated-press': {
           label: 'Associated Press',
           id: 'associated-press',
           selected: false,
@@ -157,7 +157,6 @@ class Home extends React.Component {
     const options = {
       topics, sources, sortBy,
     };
-    console.log(options);
     this.setPreferences();
     this.getArticles(options);
   }
@@ -169,7 +168,6 @@ class Home extends React.Component {
     axios.post('/preferences', { topics, sources })
       .then((message) => {
         this.props.updateUser(message.data)
-        console.log(message);
       })
       .catch(() => {
         console.log('There was an error saving user preferences');
