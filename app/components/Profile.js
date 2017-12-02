@@ -36,62 +36,47 @@ class Profile extends React.Component {
 
   render() {
     return (
-      <div id="profile">
+      <div className="profile-container">
         <Header 
           loggedIn={this.props.loggedIn} 
           user={this.props.user}
         />
-        <div className="col-1-3">
-
-          <div className="sidebar">
-            <div className="nav">
-              <nav className="nav-bar">
-                <Link to="/">Home</Link>
-              </nav>
-            </div>
-            <div className="user-info">
-              <div className="user">
-                <img className="profile-pic" src={this.state.img} alt={this.state.username} />
-                <div className="user-name">
-                  <p>{this.firstName}<br />
-                  {this.lastName}</p>
-                </div>
+        <div className="contentContainer">
+          <div className="topicsAndSourcesContainer">
+            <div className="profile-pg-user">
+              <div>
+                <img className="profile-pg-profile-img" src={this.props.user.profileImg} alt={this.props.user.username} />
               </div>
-              <div className="topics-sources">
-                {/* Favorite topics list */}
-                <div className="profileTopicsList">
-                  <h4>Saved Topics</h4>
-                  {this.state.topics.map(topicString => (
-                    <p key={topicString}>
+              <div className="profile-pg-username">
+                {this.props.user.username}
+              </div>
+            </div>
+            <div className="saved-preferences">
+              <div className="saved-topics">
+                <h4>Saved Topics</h4>
+                  {this.props.user.topics.map(topicString => (
+                    <li key={topicString}>
                       {capitalizeFirstLetter(topicString)}
-                    </p>
+                    </li>
                   ))}
-                </div>
-
-                {/* Selected Sources List */}
-                <div className="profileSourcesList">
-                  <h4>Saved Sources</h4>
-                  {this.state.selectedSources.map(sourceObj =>
-                    <p key={sourceObj.label} >{capitalizeFirstLetter(sourceObj.label)}</p>)}
-                </div>
+              </div>
+              <div className="saved-sources">
+                <h4>Saved Sources</h4>
+                  {this.props.user.selectedSources.map(sourceObj =>
+                    <li key={sourceObj.label} >{capitalizeFirstLetter(sourceObj.label)}</li>)}
               </div>
             </div>
           </div>
-        </div>
-        <div className="col-2-3">
-          {/* Favorite News Articles */}
-          <div className="profileFavoriteArticles">
-            <h2>Favorite Articles</h2>
-            {/* turnary operator to show if now articles are liked */}
-            {this.state.articles.length === 0 ?
-              <p>Articles you like will be shown here</p> :
-              <NewsList
-                newsArticles={this.state.articles}
-                favorites={this.state.articles}
-              />
-            }
+          <div className="articlesContainer">
+            <div className="fav-article-header">
+              <h4>Favorited Articles</h4>
+            </div>
+            
+              <NewsList newsArticles={this.state.articles} favorites={this.state.articles} />
+            
           </div>
         </div>
+
       </div>
     );
   }
