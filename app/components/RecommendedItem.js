@@ -9,12 +9,13 @@ class RecommendedItem extends React.Component {
     super(props);
     this.state = {
       article: props.article,
+      style: 'recommended-item',
     };
   }
 
   render() {
     return (
-      <div className="recommended-item">
+      <div className={this.state.style}>
         <Link to={{
           pathname: `/articles/${this.state.article._id}`,
           }}

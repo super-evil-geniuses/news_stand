@@ -189,9 +189,9 @@ class Home extends React.Component {
 
   toggleArticles() {
     if (this.parseSources().length === 0) {
-      return <h3 className="message" >Select a source to see the news</h3>
+      return <div className='news-list'><h3 className="message" >Select a source to see the news</h3></div>
     } else if (this.state.loading === true ) {
-      return <Loader />
+      return <div className='news-list'><Loader /></div>
     } else {
       return <NewsList newsArticles={this.state.articles} favorites={this.state.favorites} />;
     }
@@ -206,7 +206,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='sofie-app'>
         <div className="headerContainer">
           <Header 
             loggedIn={this.props.loggedIn} 
@@ -214,7 +214,7 @@ class Home extends React.Component {
           />
         </div>
 
-        <div className="contentContainer">
+        <div className="contentContainer clearfix">
           <div className="topicsAndSourcesContainer">
             <div>
               <p> Viewing {this.state.sortBy === 'popularity' ? 'most popular' : 'most recent'} news.
@@ -244,7 +244,7 @@ class Home extends React.Component {
           </div>
 
           <div className="articlesContainer">
-            {this.state.recommendedArticles.length > 0 && <RecommendedList articles={this.state.recommendedArticles}/>}
+            <RecommendedList articles={this.state.recommendedArticles}/>
             {this.toggleArticles()}
             
           </div>
