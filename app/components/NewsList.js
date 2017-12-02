@@ -7,7 +7,7 @@ import NewsItem from './NewsItem';
 const NewsList = props => (
   <div className="news-list">
     {props.newsArticles.length === 0 ?
-      <div id="no-articles">No articles found. Please try another search</div> :
+      <div className="message">No articles found. Please try another search</div> :
       props.newsArticles && uniq(props.newsArticles, i => i.url)
         .map((article) => {
           let favorited = false;
