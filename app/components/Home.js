@@ -45,7 +45,7 @@ class Home extends React.Component {
           selected: false,
         },
     },
-      topics: ['net neutrality'],
+      topics: [],
       favorites: [],
     };
 
